@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { client } from '../../lib/sanity';
+import { Header } from '../../components/layout/Header';
+import { Footer } from '../../components/layout/Footer';
+
+const posts = await client.fetch(`*[_type == "post"] {
+  title,
+  "slug": slug.current
+}`);
+---
+
+<Layout title="Blog | Mikela Blanck Kunsttherapie">
+	<Header client:load currentPath={Astro.url.pathname} />
+	<main class="container mx-auto px-4 py-24 min-h-screen">
+		<h1 class="text-4xl font-bold mb-8 text-primary">Blog</h1>
+		{posts.length > 0 ? (
+			<ul class="space-y-4">
+				{posts.map((post) => (
+					<li>
+						<a 
+							href={`/blog/${post.slug}`} 
+							class="text-xl hover:text-accent transition-colors duration-200"
+						>
+							{post.title}
+						</a>
+					</li>
+				))}
+			</ul>
+		) : (
+			<p class="text-muted-foreground">Noch keine Blogbeiträge vorhanden.</p>
+		)}
+	</main>
+	<Footer client:load />
+</Layout>

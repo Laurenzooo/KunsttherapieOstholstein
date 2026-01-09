@@ -23,6 +23,8 @@ jobs:
 
     - name: 🛠️ Build Project
       run: npm run build
+      env:
+        PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}  
 
     - name: 📂 Sync files to Netcup Live
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5

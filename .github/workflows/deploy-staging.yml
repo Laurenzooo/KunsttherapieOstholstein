@@ -23,6 +23,8 @@ jobs:
 
     - name: 🛠️ Build Project
       run: npm run build
+      env:
+        PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
       # Hinweis: Das erstellt den Ordner 'dist'.
 
     - name: 📂 Sync files to Netcup Staging

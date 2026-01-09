@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { client, urlFor } from '../../lib/sanity';
+import { Header } from '../../components/layout/Header';
+import { Footer } from '../../components/layout/Footer';
+import { PortableText } from 'astro-portabletext';
+
+export async function getStaticPaths() {
+  const posts = await client.fetch(`*[_type == "post"] {
+    "slug": slug.current
+  }`);
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0] {
+  title,
+  mainImage,
+  body
+}`, { slug });
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${post.title} | Mikela Blanck Kunsttherapie`}>
+	<Header client:load currentPath="/blog" />
+	<main class="container mx-auto px-4 py-24 min-h-screen max-w-4xl">
+		<article class="prose prose-lg prose-stone mx-auto">
+			<header class="mb-12">
+				<h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary leading-tight">
+					{post.title}
+				</h1>
+				{post.mainImage && (
+					<div class="rounded-2xl overflow-hidden shadow-xl mb-12 aspect-[16/9]">
+						<img 
+							src={urlFor(post.mainImage).width(1200).height(675).url()} 
+							alt={post.title}
+							class="w-full h-full object-cover"
+						/>
+					</div>
+				)}
+			</header>
+
+			<div class="blog-content">
+				<PortableText value={post.body} />
+			</div>
+		</article>
+
+		<div class="mt-16 pt-8 border-t border-border">
+			<a 
+				href="/blog" 
+				class="inline-flex items-center text-primary hover:text-accent transition-colors duration-200"
+			>
+				<span class="mr-2">←</span> Zurück zur Übersicht
+			</a>
+		</div>
+	</main>
+	<Footer client:load />
+</Layout>
+
+<style is:global>
+	.blog-content h2 {
+		@apply text-3xl font-bold mt-12 mb-6 text-primary;
+	}
+	.blog-content h3 {
+		@apply text-2xl font-semibold mt-8 mb-4 text-primary;
+	}
+	.blog-content p {
+		@apply mb-6 leading-relaxed text-muted-foreground;
+	}
+	.blog-content ul {
+		@apply list-disc pl-6 mb-6 space-y-2 text-muted-foreground;
+	}
+	.blog-content ol {
+		@apply list-decimal pl-6 mb-6 space-y-2 text-muted-foreground;
+	}
+	.blog-content blockquote {
+		@apply border-l-4 border-accent pl-6 italic my-8 text-primary font-medium;
+	}
+	.blog-content img {
+		@apply rounded-xl shadow-md my-8;
+	}
+</style>
