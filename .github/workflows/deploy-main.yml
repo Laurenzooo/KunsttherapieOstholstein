@@ -1,0 +1,38 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main   # Feuert nur, wenn Code auf 'main' landet
+
+jobs:
+  web-deploy:
+    name: 🚀 Deploy to Live
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 💻 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: 📦 Install Dependencies
+      run: npm ci
+
+    - name: 🛠️ Build Project
+      run: npm run build
+
+    - name: 📂 Sync files to Netcup Live
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USER_MAIN }}
+        password: ${{ secrets.FTP_PASSWORD_MAIN }}
+        local-dir: ./dist/
+        server-dir: ./
+        exclude: |
+          **/.git*
+          **/.git*/**
+          node_modules/**

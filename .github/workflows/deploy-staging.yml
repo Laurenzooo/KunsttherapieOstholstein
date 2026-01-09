@@ -1,0 +1,39 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - staging  # Feuert nur, wenn Code auf 'staging' landet
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy to Staging
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 💻 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: 📦 Install Dependencies
+      run: npm ci
+
+    - name: 🛠️ Build Project
+      run: npm run build
+      # Hinweis: Das erstellt den Ordner 'dist'.
+
+    - name: 📂 Sync files to Netcup Staging
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USER_STAGING }}
+        password: ${{ secrets.FTP_PASSWORD_STAGING }}
+        local-dir: ./dist/    # Dein gebauter Ordner (bei Astro/Vite meist 'dist/')
+        server-dir: ./        # Ziel auf dem Server (da der User schon im richtigen Ordner ist)
+        exclude: |
+          **/.git*
+          **/.git*/**
+          node_modules/**
