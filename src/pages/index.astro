@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IndexPage from '../components/pages-migration/Index.tsx';
+---
+
+<Layout>
+	<IndexPage client:load currentPath={Astro.url.pathname} />
+</Layout>
+

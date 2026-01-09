@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import KontaktPage from '../components/pages-migration/Kontakt.tsx';
+---
+
+<Layout title="Kontakt | Mikela Blanck Kunsttherapie">
+	<KontaktPage client:load currentPath={Astro.url.pathname} />
+</Layout>

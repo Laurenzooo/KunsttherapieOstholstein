@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import UeberMichPage from '../components/pages-migration/UeberMich.tsx';
+---
+
+<Layout title="Über mich | Mikela Blanck Kunsttherapie">
+	<UeberMichPage client:load currentPath={Astro.url.pathname} />
+</Layout>

@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MethodeAblaufPage from '../components/pages-migration/MethodeAblauf.tsx';
+---
+
+<Layout title="So arbeite ich | Mikela Blanck Kunsttherapie">
+	<MethodeAblaufPage client:load currentPath={Astro.url.pathname} />
+</Layout>
