@@ -10,11 +10,33 @@ import { toast } from "sonner";
 
 export default function Kontakt({ currentPath }: { currentPath?: string }) {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    toast.success("Vielen Dank! Deine Nachricht wurde gesendet.");
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch("/contact.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitted(true);
+        toast.success(result.message || "Vielen Dank! Deine Nachricht wurde gesendet.");
+      } else {
+        toast.error(result.error || "Etwas ist schiefgelaufen. Bitte versuche es später erneut.");
+      }
+    } catch (error) {
+      toast.error("Verbindung zum Server fehlgeschlagen. Bitte versuche es später erneut.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -106,26 +128,33 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <h2 className="text-2xl font-light text-foreground mb-2">Anfrage senden</h2>
 
+                  {/* Honeypot field - hidden from users */}
+                  <div className="hidden">
+                    <Label htmlFor="website">Website</Label>
+                    <Input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
+
                   <div className="space-y-4">
                     <div>
                       <Label htmlFor="name">Name *</Label>
-                      <Input id="name" type="text" placeholder="Dein Name" required className="mt-1" />
+                      <Input id="name" name="name" type="text" placeholder="Dein Name" required className="mt-1" />
                     </div>
 
                     <div>
                       <Label htmlFor="email">E-Mail *</Label>
-                      <Input id="email" type="email" placeholder="deine@email.de" required className="mt-1" />
+                      <Input id="email" name="email" type="email" placeholder="deine@email.de" required className="mt-1" />
                     </div>
 
                     <div>
                       <Label htmlFor="phone">Telefon (optional)</Label>
-                      <Input id="phone" type="tel" placeholder="Deine Telefonnummer" className="mt-1" />
+                      <Input id="phone" name="phone" type="tel" placeholder="Deine Telefonnummer" className="mt-1" />
                     </div>
 
                     <div>
                       <Label htmlFor="message">Dein Anliegen *</Label>
                       <Textarea
                         id="message"
+                        name="message"
                         placeholder="Erzähl mir kurz, worum es geht..."
                         rows={4}
                         required
@@ -134,7 +163,7 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <Checkbox id="privacy" required className="mt-1" />
+                      <Checkbox id="privacy" name="privacy" required className="mt-1" />
                       <Label htmlFor="privacy" className="text-sm font-normal leading-relaxed">
                         Ich habe die{" "}
                         <a href="/datenschutz" className="text-primary underline hover:no-underline">
@@ -145,9 +174,15 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     </div>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full">
-                    <Send className="mr-2 h-4 w-4" />
-                    Anfrage senden
+                  <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      "Wird gesendet..."
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Anfrage senden
+                      </>
+                    )}
                   </Button>
 
                   <p className="text-xs text-muted-foreground text-center">* Pflichtfelder</p>
