@@ -20,7 +20,7 @@ export function Header({ currentPath }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
-      <div className="container flex h-18 md:h-20 items-center justify-between">
+      <div className="container flex h-20 items-center justify-between">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
           <img src="/MomLogo.svg" alt="Mikela Blanck Kunsttherapie" className="h-9 md:h-11 w-auto" />
@@ -61,7 +61,7 @@ export function Header({ currentPath }: HeaderProps) {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Menü öffnen"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
           </Button>
         </div>
       </div>
@@ -69,14 +69,14 @@ export function Header({ currentPath }: HeaderProps) {
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-border bg-background">
-          <nav className="container py-6 flex flex-col gap-4">
+          <nav className="container py-8 flex flex-col gap-4">
             {navItems.map((item) => (
               <a
                 key={item.path}
                 href={item.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "text-sm uppercase tracking-widest font-medium transition-colors p-2",
+                  "text-sm uppercase tracking-widest font-medium transition-colors py-4 px-2",
                   currentPath === item.path
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"

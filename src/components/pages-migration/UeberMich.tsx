@@ -1,7 +1,7 @@
 import { ArrowRight, Shield, Sparkles, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-import portraitImage from "@/assets/portrait-therapist.jpg?url";
+const portraitImage = "/assets/MikelaBlanck_About-Bk5OmPVp.webp";
 
 const lifeStations = [
   "Abitur / kaufmännische Ausbildung",

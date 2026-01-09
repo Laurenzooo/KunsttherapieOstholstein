@@ -1,8 +1,8 @@
 import { ArrowRight, HelpCircle, Brain, Sparkles, Target, Lightbulb, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-import handsImage from "@/assets/hands-support.jpg?url";
-import malraumImage from "@/assets/malraum.jpg?url";
+const handsImage = "/assets/MikelaBlanck_SoArbeiteIch-DY8h2Pt5.webp";
+const malraumImage = "/assets/MikelaBlanck_Malraum-mtSuT8Kt.webp";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
@@ -157,7 +157,7 @@ export default function MethodeAblauf({ currentPath }: { currentPath?: string })
                   </p>
                 </div>
               </div>
-              <div className="aspect-video rounded-lg overflow-hidden">
+              <div className="aspect-[4/5] rounded-lg overflow-hidden">
                 <img
                   src={handsImage}
                   alt="Hände die sich begegnen als Symbol für Unterstützung"

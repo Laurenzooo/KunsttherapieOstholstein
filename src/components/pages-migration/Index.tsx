@@ -1,4 +1,4 @@
-import { ArrowRight, Heart, Users, Compass, Brain, Zap, Sparkles, HeartCrack } from "lucide-react";
+import { ArrowRight, Heart, Users, Compass, Brain, Zap, Sparkles, HeartCrack, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-therapy.jpg?url";
@@ -65,9 +65,18 @@ const methods = [
 ];
 
 const testimonials = [
-    "Ich habe mich auf jeden Fall in dem Jahr verändert. Mich belastende Umstände sind geschrumpft, weil ich eine andere Perspektive einnehmen konnte. Manche Glaubenssätze sind verstummt und Neues ist entstanden.",
-    "Ich bin sehr begeistert und freue mich auf weitere intensive Zeiten und Erfahrungen auf diesem Weg.",
-    "Für mich ist die Zeit bei Mikela sehr wertvoll, es ist eine Oase, an der ich sein darf und mich selbst noch besser kennen und verstehen lernen darf. Ich muss nichts leisten.",
+    {
+        quote: "Ich habe mich auf jeden Fall in dem Jahr verändert. Mich belastende Umstände sind geschrumpft, weil ich eine andere Perspektive einnehmen konnte. Manche Glaubenssätze sind verstummt und Neues ist entstanden.",
+        name: "Melanie",
+    },
+    {
+        quote: "Ich bin sehr begeistert und freue mich auf weitere intensive Zeiten und Erfahrungen auf diesem Weg.",
+        name: "Julia",
+    },
+    {
+        quote: "Für mich ist die Zeit bei Mikela sehr wertvoll, es ist eine Oase, an der ich sein darf und mich selbst noch besser kennen und verstehen lernen darf. Ich muss nichts leisten.",
+        name: "Sabine",
+    },
 ];
 
 export default function Index({ currentPath }: { currentPath?: string }) {
@@ -232,16 +241,28 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-light text-foreground mb-4">Was andere sagen</h2>
                     </div>
-                    <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                        {testimonials.map((quote, index) => (
-                            <blockquote
+                    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        {testimonials.map((item, index) => (
+                            <div
                                 key={index}
-                                className="p-6 rounded-lg bg-sage-light/50 text-center transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                                className="p-8 rounded-xl bg-background border border-border shadow-sm flex flex-col h-full"
                             >
-                                <p className="text-lg italic text-foreground">{quote}</p>
-                            </blockquote>
+                                <blockquote className="flex-grow">
+                                    <p className="text-lg leading-relaxed text-foreground/90 italic mb-8">
+                                        "{item.quote}"
+                                    </p>
+                                </blockquote>
+                                <div className="pt-6 mt-auto">
+                                    <cite className="not-italic font-medium text-foreground/70">
+                                        — {item.name}
+                                    </cite>
+                                </div>
+                            </div>
                         ))}
                     </div>
+                    <p className="text-center mt-10 text-xs text-muted-foreground italic">
+                        Hinweis: Die Namen der Klienten wurden zum Schutz der Privatsphäre anonymisiert.
+                    </p>
                 </div>
             </section>
 
