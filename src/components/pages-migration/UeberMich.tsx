@@ -6,20 +6,28 @@ import portraitImage from "@/assets/portrait-therapist.jpg?url";
 const lifeStations = [
   "Abitur / kaufmännische Ausbildung",
   "Studium der sozialen Verhaltenswissenschaften B.A.",
-  "Langjährige Berufstätigkeit in der Wirtschaft im Bereich Umweltpsychologie",
-  "Tätigkeit im öffentlichen Gesundheitswesen: Koordination von Geflüchteten und Hilfeplanung für Menschen mit besonderem Teilhabebedarf",
+  "Berufstätigkeit in der Wirtschaft und in verschiedenen Projekten",
+  "Tätigkeit im öffentlichen Gesundheitswesen als Koordinatorin für die Integration von Geflüchteten und in der Hilfeplanung für Menschen mit besonderem Teilhabebedarf",
+  "Begleitung von Menschen in der Qualifizierten Assistenz der Eingliederungshilfe",
+  "Mitarbeit in einem Projekt zur sozialen Wohnraumversorgung",
   "Neuorientierung im künstlerisch-kreativen und therapeutischen Raum",
 ];
 
 const qualifications = [
+  "Studium Soziale Verhaltenswissenschaften B.A. Fernuniversität Hagen",
   "Studium Kunsttherapie 'Personenorientiertes Malen PM' am HiK – Hamburger Institut für Kunsttherapie (Britta Kuhlmann)",
-  "Praktikum in der Parkklinik für Psychosomatik Bad Kissingen",
+  "Praktikum in der Parkklinik für Psychosomatik Bad Kissingen Bereich Kunsttherapie",
   "Aufbaufortbildung 'Lösungsorientierte Maltherapie LOM®' nach Dr. phil. Bettina Egger und Jörg Merz bei Ursula Riner (Schweiz) und Dagmar Kalder (Marburg)",
   "Heilpraktikerin ausschließlich auf dem Gebiet der Psychotherapie",
-  "Alanus Hochschule Weiterbildung 'Körpererleben als Quelle schöpferischen Ausdrucks' (Body-Mind-Centering Methode)",
+  "Alanus Hochschule Weiterbildung 'Körpererleben als Quelle schöpferischen Ausdrucks’ (Body-Mind-Centering Methode)",
   "Letzte-Hilfe-Kurs Home Care Berlin e.V.",
   "Zertifizierung in der BildASet-Methode® nach Antoaneta Slavova",
+  "LOM Weiterbildungsmodule bei Ulrike Jünger zu: Genogram Arbeit, Lebensmelodie und LOM-Unfassbar",
+  "Einwöchige Weiterbildung Systemischer Coach Kinder u. Jugendliche",
+  "Einführungsworkshop 3 Tage IFS - Internal Family System",
   "Regelmäßige Supervision der eigenen therapeutischen Tätigkeit",
+  "LOM Weiterbildungsmodul ADHS bei Britta Kuhlmann am HIK",
+  "Teilnahme an fachgebundenen Netzwerkveranstaltungen",
   "Kontinuierliche Weiterbildung im therapeutischen Bereich",
 ];
 
@@ -27,17 +35,17 @@ const values = [
   {
     icon: Shield,
     title: "Sicherer Rahmen",
-    description: "Schweigepflicht und ein geschützter Raum für deinen Prozess.",
+    description: "Ein geschützter Raum für deinen Prozess. Ich unterliege der Schweigepflicht. Du bist nicht allein.",
   },
   {
     icon: Sparkles,
     title: "Ressourcenorientiert",
-    description: "Ich arbeite mit dem, was in dir steckt – nicht gegen dich.",
+    description: "Wir arbeiten mit deinen Qualitäten. Du bist wertvoll. In dir liegt die Lösung.",
   },
   {
     icon: RefreshCcw,
     title: "Qualitätssicherung",
-    description: "Regelmäßige Supervision und kontinuierliche Weiterbildung.",
+    description: "Regelmäßige Supervision und kontinuierliche Weiterbildung. Mitglied im LOM Netzwerk Deutschland",
   },
 ];
 

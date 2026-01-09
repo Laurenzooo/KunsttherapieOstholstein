@@ -18,7 +18,7 @@ export default function Impressum({ currentPath }: { currentPath?: string }) {
                 <p>
                   Mikela Blanck<br />
                   Kunsttherapie<br />
-                  Friedrichstraße 10d<br />
+                  Friedrichstraße 8c<br />
                   23701 Eutin
                 </p>
               </div>

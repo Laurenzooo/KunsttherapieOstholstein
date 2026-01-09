@@ -69,7 +69,7 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     <div>
                       <p className="font-medium text-foreground">Adresse</p>
                       <p className="text-sm text-muted-foreground">
-                        Friedrichstraße 10d
+                        Friedrichstraße 8c
                         <br />
                         23701 Eutin
                       </p>
@@ -129,16 +129,6 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                         placeholder="Erzähl mir kurz, worum es geht..."
                         rows={4}
                         required
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="preferred-time">Wunschtermin (optional)</Label>
-                      <Input
-                        id="preferred-time"
-                        type="text"
-                        placeholder="z.B. Dienstagnachmittag, Mittwochvormittag"
                         className="mt-1"
                       />
                     </div>

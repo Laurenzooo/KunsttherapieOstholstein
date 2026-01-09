@@ -30,7 +30,7 @@ export default function Datenschutz({ currentPath }: { currentPath?: string }) {
                 </h2>
                 <p className="text-sm">
                   Mikela Blanck<br />
-                  Friedrichstraße 10d<br />
+                  Friedrichstraße 8c<br />
                   23701 Eutin<br />
                   E-Mail: hallo@kunsttherapie-ostholstein.de<br />
                   Telefon: 0151 74272814

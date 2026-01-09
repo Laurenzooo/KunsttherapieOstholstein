@@ -8,8 +8,9 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-xl font-semibold">Mikela Blanck</h3>
-              <p className="text-sm text-muted-foreground">Kunsttherapie</p>
+              <a href="/" className="inline-block mb-2">
+                <img src="/MomLogo.svg" alt="Mikela Blanck Kunsttherapie" className="h-10 w-auto" />
+              </a>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Wenn Worte nicht mehr weiterhelfen, kann beim Malen die Lösung im Bild entstehen.
@@ -41,7 +42,7 @@ export function Footer() {
               <li className="flex items-start gap-2 text-muted-foreground">
                 <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
                 <span>
-                  Friedrichstraße 10d<br />
+                  Friedrichstraße 8c<br />
                   23701 Eutin
                 </span>
               </li>
@@ -98,7 +99,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary">✓</span>
-                25 Jahre in Ostholstein
+                Regelmäßige Fortbildungen
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary">✓</span>
