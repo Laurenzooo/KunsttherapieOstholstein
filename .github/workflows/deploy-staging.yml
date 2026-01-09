@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - staging  # Feuert nur, wenn Code auf 'staging' landet
+  repository_dispatch:
+    types: [sanity_update_staging]
 
 jobs:
   web-deploy:

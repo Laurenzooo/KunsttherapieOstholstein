@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main   # Feuert nur, wenn Code auf 'main' landet
+  repository_dispatch:
+    types: [sanity_update_prod]
 
 jobs:
   web-deploy:
