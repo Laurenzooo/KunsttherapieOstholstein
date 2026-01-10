@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
 	darkMode: ["class"],
-	content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+	content: [
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"
+	],
 	prefix: "",
 	theme: {
 		container: {
@@ -159,8 +164,24 @@ export default {
 				lg: 'var(--shadow-lg)',
 				xl: 'var(--shadow-xl)',
 				'2xl': 'var(--shadow-2xl)'
-			}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						'--tw-prose-body': 'hsl(var(--muted-foreground))',
+						'--tw-prose-headings': 'hsl(var(--foreground))',
+						fontFamily: 'var(--font-sans)',
+						h1: { fontFamily: 'var(--font-sans)', fontWeight: '300' },
+						h2: { fontFamily: 'var(--font-sans)', fontWeight: '300' },
+						h3: { fontFamily: 'var(--font-sans)', fontWeight: '300' },
+						h4: { fontFamily: 'var(--font-sans)', fontWeight: '300' },
+					},
+				},
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/typography")
+	],
 } satisfies Config;

@@ -1,35 +1,53 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { client } from '../../lib/sanity';
-import { Header } from '../../components/layout/Header';
-import { Footer } from '../../components/layout/Footer';
+import BaseLayout from '../../layouts/Layout.astro';
+import { Layout } from '../../components/layout/Layout';
+import { client, urlFor } from '../../lib/sanity';
 
-const posts = await client.fetch(`*[_type == "post"] {
+const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc) {
   title,
-  "slug": slug.current
+  subheading,
+  "slug": slug.current,
+  mainImage,
+  publishedAt,
+  excerpt,
+  "categories": categories[]->title
 }`);
+
+const categories = await client.fetch(`*[_type == "category"] | order(title asc) {
+  title
+}`);
+
+import { BlogGrid } from '../../components/blog/BlogGrid';
+
+const formatDate = (dateString: string) => {
+	return new Date(dateString).toLocaleDateString('de-DE', {
+		day: '2-digit',
+		month: 'long',
+		year: 'numeric'
+	});
+};
 ---
 
-<Layout title="Blog | Mikela Blanck Kunsttherapie">
-	<Header client:load currentPath={Astro.url.pathname} />
-	<main class="container mx-auto px-4 py-24 min-h-screen">
-		<h1 class="text-4xl font-bold mb-8 text-primary">Blog</h1>
-		{posts.length > 0 ? (
-			<ul class="space-y-4">
-				{posts.map((post) => (
-					<li>
-						<a 
-							href={`/blog/${post.slug}`} 
-							class="text-xl hover:text-accent transition-colors duration-200"
-						>
-							{post.title}
-						</a>
-					</li>
-				))}
-			</ul>
-		) : (
-			<p class="text-muted-foreground">Noch keine Blogbeiträge vorhanden.</p>
-		)}
-	</main>
-	<Footer client:load />
-</Layout>
+<BaseLayout title="Blog | Mikela Blanck Kunsttherapie">
+	<Layout client:load currentPath={Astro.url.pathname}>
+		<div class="pt-24 md:pt-32 pb-24">
+			<div class="container mx-auto px-4 md:px-6">
+				<!-- Header Section -->
+				<div class="max-w-3xl mb-16">
+					<h1 class="text-4xl md:text-6xl font-light mb-6 text-foreground tracking-tight">
+						Blog & Gedanken
+					</h1>
+					<p class="text-xl text-muted-foreground leading-relaxed">
+						Einblicke in die Kunsttherapie, kreative Impulse und aktuelle Themen aus meiner Praxis.
+					</p>
+				</div>
+
+				<BlogGrid 
+					client:load 
+					posts={posts} 
+					categories={categories} 
+				/>
+			</div>
+		</div>
+	</Layout>
+</BaseLayout>

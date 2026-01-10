@@ -1,8 +1,7 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import BaseLayout from '../../layouts/Layout.astro';
+import { Layout } from '../../components/layout/Layout';
 import { client, urlFor } from '../../lib/sanity';
-import { Header } from '../../components/layout/Header';
-import { Footer } from '../../components/layout/Footer';
 import { PortableText } from 'astro-portabletext';
 
 export async function getStaticPaths() {
@@ -19,57 +18,142 @@ const { slug } = Astro.params;
 
 const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0] {
   title,
+  subheading,
   mainImage,
-  body
+  body,
+  publishedAt,
+  "categories": categories[]->title,
+  author-> {
+    name,
+    image,
+    bio
+  }
 }`, { slug });
 
 if (!post) {
   return Astro.redirect('/404');
 }
+
+const formatDate = (dateString: string) => {
+	if (!dateString) return '';
+	return new Date(dateString).toLocaleDateString('de-DE', {
+		day: '2-digit',
+		month: 'long',
+		year: 'numeric'
+	});
+};
 ---
 
-<Layout title={`${post.title} | Mikela Blanck Kunsttherapie`}>
-	<Header client:load currentPath="/blog" />
-	<main class="container mx-auto px-4 py-24 min-h-screen max-w-4xl">
-		<article class="prose prose-lg prose-stone mx-auto">
-			<header class="mb-12">
-				<h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary leading-tight">
-					{post.title}
-				</h1>
-				{post.mainImage && (
-					<div class="rounded-2xl overflow-hidden shadow-xl mb-12 aspect-[16/9]">
-						<img 
-							src={urlFor(post.mainImage).width(1200).height(675).url()} 
-							alt={post.title}
-							class="w-full h-full object-cover"
-						/>
+<BaseLayout title={`${post.title} | Mikela Blanck Kunsttherapie`}>
+	<Layout client:load currentPath="/blog">
+		<div class="pt-24 md:pt-32 pb-24">
+			<main class="container mx-auto px-4 max-w-4xl">
+				{/* Breadcrumbs */}
+				<nav class="flex items-center gap-2 text-sm text-muted-foreground mb-12 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
+					<a href="/blog" class="hover:text-primary transition-colors">Blog</a>
+					<span class="text-border">/</span>
+					{post.categories && post.categories.length > 0 && (
+						<>
+							<a 
+								href={`/blog?category=${encodeURIComponent(post.categories[0])}`} 
+								class="hover:text-primary transition-colors"
+							>
+								{post.categories[0]}
+							</a>
+							<span class="text-border">/</span>
+						</>
+					)}
+					<span class="text-foreground font-medium truncate">{post.title}</span>
+				</nav>
+
+				{/* Article Header (Outside prose for clean styling) */}
+				<header class="mb-12">
+					{post.mainImage && (
+						<div class="rounded-2xl overflow-hidden shadow-xl mb-12 aspect-[16/9] bg-muted">
+							<img 
+								src={urlFor(post.mainImage).width(1200).url()} 
+								alt={post.title}
+								class="w-full h-full object-cover object-center"
+								loading="eager"
+							/>
+						</div>
+					)}
+					<h1 class="text-4xl md:text-5xl font-light tracking-tight mb-4 text-foreground leading-tight">
+						{post.title}
+					</h1>
+					
+					<div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 text-sm">
+						<time datetime={post.publishedAt} class="text-muted-foreground font-medium">
+							{formatDate(post.publishedAt)}
+						</time>
+						<span class="w-1 h-1 rounded-full bg-border"></span>
+						<span class="text-primary/80 font-semibold uppercase tracking-wider text-[11px]">
+							{post.categories && post.categories.length > 0 ? post.categories.join(', ') : 'Artikel'}
+						</span>
 					</div>
+
+					{post.subheading && (
+						<p class="text-xl md:text-2xl font-light text-muted-foreground italic mb-6">
+							{post.subheading}
+						</p>
+					)}
+				</header>
+
+				<article class="prose prose-lg prose-stone mx-auto max-w-none shadow-none">
+					<div class="blog-content">
+						<PortableText value={post.body} />
+					</div>
+				</article>
+
+				{/* About the Author Section */}
+				{post.author && (
+					<section class="mt-24 p-8 md:p-12 rounded-[2rem] bg-[#B19D90]/5 border border-[#B19D90]/10 relative overflow-hidden">
+						<div class="absolute top-0 right-0 w-32 h-32 bg-[#9BC8D6]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+						<div class="flex flex-col md:flex-row items-center md:items-start gap-10 relative z-10">
+							{post.author.image && (
+								<div class="shrink-0">
+									<div class="relative">
+										<div class="absolute inset-0 bg-[#B19D90]/20 rounded-2xl rotate-3 scale-105 blur-sm"></div>
+										<img 
+											src={urlFor(post.author.image).width(300).height(300).url()} 
+											alt={post.author.name}
+											class="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg relative z-10 border-2 border-white/50"
+										/>
+									</div>
+								</div>
+							)}
+							<div class="flex-1 text-center md:text-left">
+								<span class="text-xs font-medium uppercase tracking-widest text-[#B19D90] mb-2 block">Über die Autorin</span>
+								<h3 class="text-3xl font-light tracking-tight mb-4 text-foreground">
+									{post.author.name}
+								</h3>
+								<div class="prose prose-stone prose-sm text-muted-foreground leading-relaxed">
+									<PortableText value={post.author.bio} />
+								</div>
+							</div>
+						</div>
+					</section>
 				)}
-			</header>
 
-			<div class="blog-content">
-				<PortableText value={post.body} />
-			</div>
-		</article>
-
-		<div class="mt-16 pt-8 border-t border-border">
-			<a 
-				href="/blog" 
-				class="inline-flex items-center text-primary hover:text-accent transition-colors duration-200"
-			>
-				<span class="mr-2">←</span> Zurück zur Übersicht
-			</a>
+				<div class="mt-16 pt-8 border-t border-border">
+					<a 
+						href="/blog" 
+						class="inline-flex items-center text-foreground hover:text-primary transition-colors duration-200 group"
+					>
+						<span class="mr-2 transform group-hover:-translate-x-1 transition-transform duration-200">←</span> Zurück zur Übersicht
+					</a>
+				</div>
+			</main>
 		</div>
-	</main>
-	<Footer client:load />
-</Layout>
+	</Layout>
+</BaseLayout>
 
 <style is:global>
 	.blog-content h2 {
-		@apply text-3xl font-bold mt-12 mb-6 text-primary;
+		@apply text-3xl font-light tracking-tight mt-12 mb-6 text-foreground;
 	}
 	.blog-content h3 {
-		@apply text-2xl font-semibold mt-8 mb-4 text-primary;
+		@apply text-2xl font-light tracking-tight mt-8 mb-4 text-foreground;
 	}
 	.blog-content p {
 		@apply mb-6 leading-relaxed text-muted-foreground;
@@ -81,7 +165,7 @@ if (!post) {
 		@apply list-decimal pl-6 mb-6 space-y-2 text-muted-foreground;
 	}
 	.blog-content blockquote {
-		@apply border-l-4 border-accent pl-6 italic my-8 text-primary font-medium;
+		@apply border-l-4 border-primary pl-6 italic my-8 text-foreground font-medium;
 	}
 	.blog-content img {
 		@apply rounded-xl shadow-md my-8;

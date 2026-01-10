@@ -8,6 +8,7 @@ const navItems = [
   { label: "So arbeite ich", path: "/methode-ablauf" },
   { label: "Angebot & Preise", path: "/angebot-preise" },
   { label: "Über mich", path: "/ueber-mich" },
+  { label: "Blog", path: "/blog" },
   { label: "Kontakt", path: "/kontakt" },
 ];
 
