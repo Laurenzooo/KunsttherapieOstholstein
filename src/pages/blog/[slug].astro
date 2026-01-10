@@ -81,7 +81,12 @@ const headings = post.body
 
 ---
 
-<BaseLayout title={`${post.title} | Mikela Blanck Kunsttherapie`}>
+<BaseLayout 
+	title={`${post.title} | Mikela Blanck Kunsttherapie`}
+	description={post.seoDescription}
+	image={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined}
+	type="article"
+>
 	<Layout client:load currentPath="/blog">
 		<div class="pt-12 md:pt-16 pb-24">
 			<main class="container mx-auto">

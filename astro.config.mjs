@@ -8,6 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
+    site: 'https://kunsttherapie-ostholstein.de',
     integrations: [react(), tailwind()],
     output: 'static',
     vite: {
