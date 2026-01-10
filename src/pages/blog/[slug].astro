@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/Layout.astro';
 import { Layout } from '../../components/layout/Layout';
 import { client, urlFor } from '../../lib/sanity';
 import { PortableText } from 'astro-portabletext';
+import { ptComponents } from '../../components/blog/PortableTextComponents';
 
 export async function getStaticPaths() {
   const posts = await client.fetch(`*[_type == "post"] {
@@ -22,12 +23,28 @@ const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0] 
   mainImage,
   body,
   publishedAt,
+  seoDescription,
+  readingTime,
+  "relatedPosts": relatedPosts[]-> {
+    title,
+    "slug": slug.current,
+    mainImage,
+    "categories": categories[]->title
+  },
   "categories": categories[]->title,
   author-> {
     name,
     image,
     bio
   }
+}`, { slug });
+
+const latestPosts = await client.fetch(`*[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+  title,
+  "slug": slug.current,
+  mainImage,
+  publishedAt,
+  "categories": categories[]->title
 }`, { slug });
 
 if (!post) {
@@ -42,111 +59,262 @@ const formatDate = (dateString: string) => {
 		year: 'numeric'
 	});
 };
+
+const slugify = (text: string) => {
+	return text
+		.toLowerCase()
+		.replace(/\s+/g, '-')
+		.replace(/[^\w-]/g, '');
+};
+
+const headings = post.body
+	.filter((block: any) => block._type === 'block' && ['h2', 'h3'].includes(block.style))
+	.map((block: any) => {
+		const text = block.children.map((child: any) => child.text).join('');
+		return {
+			text,
+			id: slugify(text),
+			style: block.style
+		};
+	});
+
+
 ---
 
 <BaseLayout title={`${post.title} | Mikela Blanck Kunsttherapie`}>
 	<Layout client:load currentPath="/blog">
-		<div class="pt-24 md:pt-32 pb-24">
-			<main class="container mx-auto px-4 max-w-4xl">
-				{/* Breadcrumbs */}
-				<nav class="flex items-center gap-2 text-sm text-muted-foreground mb-12 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
-					<a href="/blog" class="hover:text-primary transition-colors">Blog</a>
-					<span class="text-border">/</span>
-					{post.categories && post.categories.length > 0 && (
-						<>
-							<a 
-								href={`/blog?category=${encodeURIComponent(post.categories[0])}`} 
-								class="hover:text-primary transition-colors"
-							>
-								{post.categories[0]}
-							</a>
+		<div class="pt-12 md:pt-16 pb-24">
+			<main class="container mx-auto">
+				<div class="lg:grid lg:grid-cols-[200px_1fr] xl:grid-cols-[200px_1fr_300px] gap-x-12 xl:gap-x-16 items-start">
+					{/* Top Section: Breadcrumbs and Header (Middle Column, Row 1) */}
+					<div class="lg:col-start-2 lg:row-start-1 max-w-3xl">
+						{/* Breadcrumbs */}
+						<nav class="flex items-center gap-2 text-sm text-muted-foreground mb-6 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
+							<a href="/blog" class="hover:text-primary transition-colors">Blog</a>
 							<span class="text-border">/</span>
-						</>
-					)}
-					<span class="text-foreground font-medium truncate">{post.title}</span>
-				</nav>
+							{post.categories && post.categories.length > 0 && (
+								<>
+									<a 
+										href={`/blog?category=${encodeURIComponent(post.categories[0])}`} 
+										class="hover:text-primary transition-colors"
+									>
+										{post.categories[0]}
+									</a>
+									<span class="text-border">/</span>
+								</>
+							)}
+							<span class="text-foreground font-medium truncate">{post.title}</span>
+						</nav>
 
-				{/* Article Header (Outside prose for clean styling) */}
-				<header class="mb-12">
-					{post.mainImage && (
-						<div class="rounded-2xl overflow-hidden shadow-xl mb-12 aspect-[16/9] bg-muted">
-							<img 
-								src={urlFor(post.mainImage).width(1200).url()} 
-								alt={post.title}
-								class="w-full h-full object-cover object-center"
-								loading="eager"
-							/>
-						</div>
-					)}
-					<h1 class="text-4xl md:text-5xl font-light tracking-tight mb-4 text-foreground leading-tight">
-						{post.title}
-					</h1>
-					
-					<div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 text-sm">
-						<time datetime={post.publishedAt} class="text-muted-foreground font-medium">
-							{formatDate(post.publishedAt)}
-						</time>
-						<span class="w-1 h-1 rounded-full bg-border"></span>
-						<span class="text-primary/80 font-semibold uppercase tracking-wider text-[11px]">
-							{post.categories && post.categories.length > 0 ? post.categories.join(', ') : 'Artikel'}
-						</span>
-					</div>
-
-					{post.subheading && (
-						<p class="text-xl md:text-2xl font-light text-muted-foreground italic mb-6">
-							{post.subheading}
-						</p>
-					)}
-				</header>
-
-				<article class="prose prose-lg prose-stone mx-auto max-w-none shadow-none">
-					<div class="blog-content">
-						<PortableText value={post.body} />
-					</div>
-				</article>
-
-				{/* About the Author Section */}
-				{post.author && (
-					<section class="mt-24 p-8 md:p-12 rounded-[2rem] bg-[#B19D90]/5 border border-[#B19D90]/10 relative overflow-hidden">
-						<div class="absolute top-0 right-0 w-32 h-32 bg-[#9BC8D6]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-						<div class="flex flex-col md:flex-row items-center md:items-start gap-10 relative z-10">
-							{post.author.image && (
-								<div class="shrink-0">
-									<div class="relative">
-										<div class="absolute inset-0 bg-[#B19D90]/20 rounded-2xl rotate-3 scale-105 blur-sm"></div>
-										<img 
-											src={urlFor(post.author.image).width(300).height(300).url()} 
-											alt={post.author.name}
-											class="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg relative z-10 border-2 border-white/50"
-										/>
-									</div>
+						{/* Article Header */}
+						<header class="mb-12">
+							<h1 class="text-4xl md:text-5xl font-light tracking-tight mb-4 text-foreground leading-tight">
+								{post.title}
+							</h1>
+							
+							{post.subheading && (
+								<div class="text-xl md:text-2xl font-light text-muted-foreground mb-8 prose-p:leading-relaxed">
+									<PortableText value={post.subheading} />
 								</div>
 							)}
-							<div class="flex-1 text-center md:text-left">
-								<span class="text-xs font-medium uppercase tracking-widest text-[#B19D90] mb-2 block">Über die Autorin</span>
-								<h3 class="text-3xl font-light tracking-tight mb-4 text-foreground">
-									{post.author.name}
-								</h3>
-								<div class="prose prose-stone prose-sm text-muted-foreground leading-relaxed">
-									<PortableText value={post.author.bio} />
+							
+							<div class="flex items-center gap-4">
+								{post.author && post.author.image && (
+									<img 
+										src={urlFor(post.author.image).width(120).height(120).url()} 
+										alt={post.author.name}
+										class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+									/>
+								)}
+								<div class="flex flex-col">
+									<span class="text-sm font-semibold uppercase tracking-wider text-foreground">
+										{post.author?.name || 'Mikela Blanck'}
+									</span>
+									<div class="flex items-center gap-3 mt-1">
+										<time datetime={post.publishedAt} class="text-[11px] font-medium tracking-widest text-muted-foreground">
+											{new Date(post.publishedAt).toLocaleDateString('en-US', {
+												month: 'short',
+												day: '2-digit',
+												year: 'numeric'
+											}).toUpperCase()}
+										</time>
+										{post.readingTime && (
+											<span class="flex items-center px-2 py-0.5 rounded-full bg-[#B19D90]/10 text-[#B19D90] text-[9px] font-bold tracking-widest leading-none">
+												{post.readingTime} MIN READ
+											</span>
+										)}
+									</div>
 								</div>
 							</div>
-						</div>
-					</section>
-				)}
+						</header>
+					</div>
 
-				<div class="mt-16 pt-8 border-t border-border">
-					<a 
-						href="/blog" 
-						class="inline-flex items-center text-foreground hover:text-primary transition-colors duration-200 group"
-					>
-						<span class="mr-2 transform group-hover:-translate-x-1 transition-transform duration-200">←</span> Zurück zur Übersicht
-					</a>
+					{/* Sidebar Table of Contents (Left Column, Row 2) */}
+					{headings.length > 0 && (
+						<aside class="sticky top-32 hidden lg:block lg:col-start-1 lg:row-start-2">
+							<nav class="space-y-4">
+								<h4 class="text-sm font-semibold uppercase tracking-widest text-[#B19D90] mb-6">Inhalt</h4>
+								<ul class="space-y-3">
+									{headings.map((heading) => (
+										<li class={heading.style === 'h3' ? 'pl-4' : ''}>
+											<a 
+												href={`#${heading.id}`}
+												class="toc-link text-sm text-muted-foreground hover:text-primary transition-colors duration-200 leading-tight block py-1 border-l-2 border-transparent hover:border-primary/30 pl-3 -ml-3"
+											>
+												{heading.text}
+											</a>
+										</li>
+									))}
+								</ul>
+							</nav>
+						</aside>
+					)}
+
+					{/* Middle Content Column (Middle Column, Row 2) */}
+					<div class="lg:col-start-2 lg:row-start-2 max-w-3xl">
+						{post.mainImage && (
+							<div class="rounded-2xl overflow-hidden shadow-xl aspect-[16/9] bg-muted mb-12">
+								<img 
+									src={urlFor(post.mainImage).width(1200).url()} 
+									alt={post.title}
+									class="w-full h-full object-cover object-center"
+									loading="eager"
+								/>
+							</div>
+						)}
+						{/* Article Body */}
+						<article class="prose prose-lg prose-stone max-w-none shadow-none">
+							<div class="blog-content">
+								<PortableText value={post.body} components={ptComponents} />
+							</div>
+						</article>
+
+						{/* About the Author Section */}
+						{post.author && (
+							<section class="mt-24 p-8 md:p-12 rounded-[2rem] bg-[#B19D90]/5 border border-[#B19D90]/10 relative overflow-hidden">
+								<div class="absolute top-0 right-0 w-32 h-32 bg-[#9BC8D6]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+								<div class="flex flex-col md:flex-row items-center md:items-start gap-10 relative z-10">
+									{post.author.image && (
+										<div class="shrink-0">
+											<div class="relative">
+												<div class="absolute inset-0 bg-[#B19D90]/20 rounded-2xl rotate-3 scale-105 blur-sm"></div>
+												<img 
+													src={urlFor(post.author.image).width(300).height(300).url()} 
+													alt={post.author.name}
+													class="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg relative z-10 border-2 border-white/50"
+												/>
+											</div>
+										</div>
+									)}
+									<div class="flex-1 text-center md:text-left">
+										<span class="text-xs font-medium uppercase tracking-widest text-[#B19D90] mb-2 block">Über die Autorin</span>
+										<h3 class="text-3xl font-light tracking-tight mb-4 text-foreground">
+											{post.author.name}
+										</h3>
+										<div class="prose prose-stone prose-sm text-muted-foreground leading-relaxed">
+											<PortableText value={post.author.bio} />
+										</div>
+									</div>
+								</div>
+							</section>
+						)}
+					</div>
+
+					{/* Sidebar Contact CTA (Right Column, Row 2) */}
+					<aside class="sticky top-32 hidden xl:block xl:col-start-3 xl:row-start-2">
+						<div class="bg-[#B19D90]/5 border border-[#B19D90]/10 rounded-[2rem] p-8 relative overflow-hidden group">
+							<div class="absolute top-0 right-0 w-24 h-24 bg-[#9BC8D6]/10 rounded-full blur-2xl -mr-12 -mt-12 transition-transform duration-500 group-hover:scale-150"></div>
+							
+							<div class="relative z-10">
+								<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B19D90] mb-4 block">Kontakt</span>
+								<h4 class="text-2xl font-light tracking-tight text-foreground mb-4 leading-tight">Bereit für Veränderung?</h4>
+								<p class="text-sm text-muted-foreground leading-relaxed mb-8">
+									Lassen Sie uns gemeinsam herausfinden, wie Kunsttherapie Sie auf Ihrem individuellen Weg unterstützen kann.
+								</p>
+								<a 
+									href="/kontakt" 
+									class="block w-full text-center py-4 rounded-xl bg-[#B19D90] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#A08C7F] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+								>
+									Jetzt Kontakt aufnehmen
+								</a>
+							</div>
+						</div>
+					</aside>
+
+				</div>
+
+				{/* Bottom Section: Latest Articles */}
+				<div class="mt-32 pt-24 border-t border-border">
+					<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+						<div>
+							<span class="text-xs font-medium uppercase tracking-widest text-[#B19D90] mb-3 block">Inspiration</span>
+							<h4 class="text-3xl font-light tracking-tight text-foreground">Weitere aktuelle Beiträge</h4>
+						</div>
+						<a 
+							href="/blog" 
+							class="text-sm font-semibold text-foreground hover:text-primary transition-colors duration-200 flex items-center group"
+						>
+							Alle Artikel ansehen
+							<span class="ml-2 transform group-hover:translate-x-1 transition-transform duration-200">→</span>
+						</a>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						{(post.relatedPosts && post.relatedPosts.length > 0 ? post.relatedPosts : latestPosts).map((lp: any) => (
+							<a href={`/blog/${lp.slug}`} class="group">
+								<div class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-6 bg-muted shadow-md">
+									{lp.mainImage && (
+										<img 
+											src={urlFor(lp.mainImage).width(800).height(500).url()} 
+											alt={lp.title}
+											class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+										/>
+									)}
+									<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+								</div>
+								<div>
+									<span class="text-[10px] uppercase tracking-wider text-[#B19D90] font-bold mb-2 block">
+										{lp.categories?.[0] || 'Artikel'}
+									</span>
+									<h5 class="text-xl font-light leading-snug text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
+										{lp.title}
+									</h5>
+								</div>
+							</a>
+						))}
+					</div>
 				</div>
 			</main>
 		</div>
 	</Layout>
 </BaseLayout>
+
+<script>
+	const observerOptions = {
+		root: null,
+		rootMargin: '-100px 0px -66%',
+		threshold: 0
+	};
+
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			const id = entry.target.getAttribute('id');
+			const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+			
+			if (entry.isIntersecting) {
+				document.querySelectorAll('.toc-link').forEach((link) => {
+					link.classList.remove('active');
+				});
+				tocLink?.classList.add('active');
+			}
+		});
+	}, observerOptions);
+
+	// Track all h2 and h3 headings in the blog content
+	document.querySelectorAll('.blog-content h2, .blog-content h3').forEach((heading) => {
+		observer.observe(heading);
+	});
+</script>
 
 <style is:global>
 	.blog-content h2 {
@@ -169,5 +337,10 @@ const formatDate = (dateString: string) => {
 	}
 	.blog-content img {
 		@apply rounded-xl shadow-md my-8;
+	}
+
+	/* TOC Active State */
+	.toc-link.active {
+		@apply text-primary border-primary font-medium;
 	}
 </style>

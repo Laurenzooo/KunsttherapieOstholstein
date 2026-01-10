@@ -3,7 +3,7 @@ import { urlFor } from '../../lib/sanity';
 
 interface Post {
     title: string;
-    subheading?: string;
+    subheading?: string | any[];
     slug: string;
     mainImage: any;
     publishedAt: string;
@@ -55,6 +55,18 @@ export const BlogGrid = ({ posts, categories }: BlogGridProps) => {
             month: 'long',
             year: 'numeric'
         });
+    };
+
+    const toPlainText = (blocks: any[] = []) => {
+        if (!blocks || !Array.isArray(blocks)) return '';
+        return blocks
+            .map(block => {
+                if (block._type !== 'block' || !block.children) {
+                    return '';
+                }
+                return block.children.map((child: any) => child.text).join('');
+            })
+            .join('\n\n');
     };
 
     return (
@@ -125,18 +137,13 @@ export const BlogGrid = ({ posts, categories }: BlogGridProps) => {
                                     </span>
                                 </div>
 
-                                {post.subheading && (
-                                    <p className="text-xs font-semibold uppercase tracking-widest text-primary/70 mb-2">
-                                        {post.subheading}
-                                    </p>
-                                )}
-                                <h2 className="text-2xl font-light tracking-tight mb-4 text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                                <h2 className="text-2xl font-light tracking-tight mb-3 text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                                     {post.title}
                                 </h2>
 
-                                {post.excerpt && (
-                                    <p className="text-muted-foreground line-clamp-3 leading-relaxed mb-6">
-                                        {post.excerpt}
+                                {post.subheading && (
+                                    <p className="text-muted-foreground line-clamp-2 leading-relaxed mb-6">
+                                        {typeof post.subheading === 'string' ? post.subheading : toPlainText(post.subheading as any)}
                                     </p>
                                 )}
 

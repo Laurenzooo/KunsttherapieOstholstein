@@ -13,7 +13,28 @@ export default defineType({
     defineField({
       name: 'subheading',
       title: 'Subheading',
-      type: 'string',
+      type: 'blockContent',
+      description: 'A brief, catchy summary shown below the title.',
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'SEO Description',
+      type: 'text',
+      description: 'Used for search engine results and social media snippets. Max 160 characters recommended.',
+      validation: Rule => Rule.max(160),
+    }),
+    defineField({
+      name: 'readingTime',
+      title: 'Reading Time (minutes)',
+      type: 'number',
+      description: 'Estimated time to read this article.',
+    }),
+    defineField({
+      name: 'relatedPosts',
+      title: 'Related Posts',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'post' } }],
+      description: 'Select articles to feature at the bottom of this post.',
     }),
     defineField({
       name: 'slug',
