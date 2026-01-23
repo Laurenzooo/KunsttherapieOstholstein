@@ -6,14 +6,25 @@ import { PortableText } from 'astro-portabletext';
 import { ptComponents } from '../../components/blog/PortableTextComponents';
 
 export async function getStaticPaths() {
-  const posts = await client.fetch(`*[_type == "post"] {
-    "slug": slug.current
-  }`);
+  const posts = await client.fetch(`*[_type == "post"]`);
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-  }));
+  return posts
+    // SCHRITT 1: Filtere kaputte Posts raus (WICHTIG!)
+    // Wir behalten nur Posts, die einen Slug HABEN und wo slug.current existiert.
+    .filter(post => post.slug && post.slug.current)
+    
+    // SCHRITT 2: Mapping
+    .map((post) => {
+      return {
+        params: { 
+          // Hier greifen wir sicher auf .current zu
+          slug: post.slug.current 
+        },
+        props: { post },
+      };
+    });
 }
+
 
 const { slug } = Astro.params;
 
@@ -76,14 +87,24 @@ const headings = post.body
 			id: slugify(text),
 			style: block.style
 		};
-	});
+const portableTextToPlainText = (blocks: any[] = []) => {
+  return blocks
+    .map((block) => {
+      if (block._type !== 'block' || !block.children) {
+        return '';
+      }
+      return block.children.map((child: any) => child.text).join('');
+    })
+    .join(' ');
+};
 
+const metaDescription = post.seoDescription || (post.subheading ? portableTextToPlainText(post.subheading) : undefined);
 
 ---
 
 <BaseLayout 
 	title={`${post.title} | Mikela Blanck Kunsttherapie`}
-	description={post.seoDescription}
+	description={metaDescription}
 	image={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined}
 	type="article"
 >
