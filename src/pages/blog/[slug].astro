@@ -6,49 +6,38 @@ import { PortableText } from 'astro-portabletext';
 import { ptComponents } from '../../components/blog/PortableTextComponents';
 
 export async function getStaticPaths() {
-  const posts = await client.fetch(`*[_type == "post"]`);
+  const posts = await client.fetch(`*[_type == "post"] {
+    ...,
+    "slug": slug.current,
+    "categories": categories[]->title,
+    "author": author-> {
+      name,
+      image,
+      bio
+    },
+    "relatedPosts": relatedPosts[]-> {
+      title,
+      "slug": slug.current,
+      mainImage,
+      "categories": categories[]->title
+    }
+  }`);
 
   return posts
-    // SCHRITT 1: Filtere kaputte Posts raus (WICHTIG!)
-    // Wir behalten nur Posts, die einen Slug HABEN und wo slug.current existiert.
-    .filter(post => post.slug && post.slug.current)
-    
-    // SCHRITT 2: Mapping
-    .map((post) => {
-      return {
-        params: { 
-          // Hier greifen wir sicher auf .current zu
-          slug: post.slug.current 
-        },
-        props: { post },
-      };
-    });
+    .filter(post => post.slug)
+    .map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
 }
 
+const { post } = Astro.props;
 
-const { slug } = Astro.params;
+if (!post) {
+  return Astro.redirect('/404');
+}
 
-const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0] {
-  title,
-  subheading,
-  mainImage,
-  body,
-  publishedAt,
-  seoDescription,
-  readingTime,
-  "relatedPosts": relatedPosts[]-> {
-    title,
-    "slug": slug.current,
-    mainImage,
-    "categories": categories[]->title
-  },
-  "categories": categories[]->title,
-  author-> {
-    name,
-    image,
-    bio
-  }
-}`, { slug });
+const slug = post.slug;
 
 const latestPosts = await client.fetch(`*[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
   title,
@@ -57,10 +46,6 @@ const latestPosts = await client.fetch(`*[_type == "post" && slug.current != $sl
   publishedAt,
   "categories": categories[]->title
 }`, { slug });
-
-if (!post) {
-  return Astro.redirect('/404');
-}
 
 const formatDate = (dateString: string) => {
 	if (!dateString) return '';
@@ -79,14 +64,18 @@ const slugify = (text: string) => {
 };
 
 const headings = post.body
-	.filter((block: any) => block._type === 'block' && ['h2', 'h3'].includes(block.style))
-	.map((block: any) => {
-		const text = block.children.map((child: any) => child.text).join('');
-		return {
-			text,
-			id: slugify(text),
-			style: block.style
-		};
+	? post.body
+		.filter((block: any) => block._type === 'block' && ['h2', 'h3'].includes(block.style))
+		.map((block: any) => {
+			const text = block.children.map((child: any) => child.text).join('');
+			return {
+				text,
+				id: slugify(text),
+				style: block.style
+			};
+		})
+	: [];
+
 const portableTextToPlainText = (blocks: any[] = []) => {
   return blocks
     .map((block) => {
@@ -99,7 +88,6 @@ const portableTextToPlainText = (blocks: any[] = []) => {
 };
 
 const metaDescription = post.seoDescription || (post.subheading ? portableTextToPlainText(post.subheading) : undefined);
-
 ---
 
 <BaseLayout 
