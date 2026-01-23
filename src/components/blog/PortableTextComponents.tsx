@@ -18,13 +18,13 @@ export const ptComponents = {
             return <h3 id={slugify(text)}>{children}</h3>;
         }
     },
-    types: {
-        image: ({ value }: any) => {
-            if (!value?.asset?._ref) return null;
+    type: {
+        image: ({ node }: any) => {
+            if (!node?.asset?._ref) return null;
             return (
                 <img
-                    src={urlFor(value).width(1200).url()}
-                    alt={value.alt || 'Blog image'}
+                    src={urlFor(node).width(1200).url()}
+                    alt={node.alt || 'Blog image'}
                     className="rounded-xl shadow-md my-8 w-full h-auto"
                     loading="lazy"
                 />
