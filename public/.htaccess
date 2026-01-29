@@ -1,0 +1,9 @@
+# 301 Redirects
+Redirect 301 /maltherapie https://kunsttherapie-ostholstein.de/blog/lom-maltherapie/
+
+# Alte Seiten zur Homepage
+Redirect 301 /trauer https://kunsttherapie-ostholstein.de/
+Redirect 301 /pm-lom https://kunsttherapie-ostholstein.de/
+Redirect 301 /events-1/auszeit-fr-frauen https://kunsttherapie-ostholstein.de/
+Redirect 301 /kontakt-1 https://kunsttherapie-ostholstein.de/kontakt/
+Redirect 301 /malraum https://kunsttherapie-ostholstein.de/
