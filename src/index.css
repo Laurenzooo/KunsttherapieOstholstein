@@ -28,11 +28,11 @@
     --primary-foreground: 0 0% 100%;
 
     /* Secondary: Light Blue (Calming) */
-    --secondary: 194 42% 72%;
+    --secondary: 208 100% 90%;
     --secondary-foreground: 222 47% 11%;
 
     /* Accent: Match Secondary for consistency */
-    --accent: 194 42% 72%;
+    --accent: 208 100% 90%;
     --accent-foreground: 222 47% 11%;
 
     /* Muted tones - Neutral Cool Grey */
@@ -102,14 +102,14 @@
     --primary-foreground: 0 0% 100%;
 
     /* Secondary: Darker/Mutated Light Blue */
-    --secondary: 200 60% 30%;
+    --secondary: 208 60% 30%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 215 16% 46%;
     --muted-foreground: 210 40% 98%;
 
     /* Accent: Match secondary */
-    --accent: 200 60% 30%;
+    --accent: 208 60% 30%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84% 60%;

@@ -83,50 +83,80 @@ export default function Index({ currentPath }: { currentPath?: string }) {
     return (
         <Layout currentPath={currentPath}>
             {/* Hero Section */}
-            <section className="py-16 md:py-20 overflow-hidden">
-                <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                        <div className="space-y-6 text-left">
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] animate-fade-in">
-                                Wenn Worte nicht mehr weiterhelfen …
-                            </h1>
-                            <p
-                                className="text-xl md:text-2xl text-primary italic w-full animate-fade-in"
-                                style={{ animationDelay: "0.1s" }}
-                            >
-                                … dann kann beim Malen die Lösung im Bild entstehen.
-                            </p>
-                            <p
-                                className="text-lg text-muted-foreground max-w-xl animate-fade-in leading-relaxed"
-                                style={{ animationDelay: "0.2s" }}
-                            >
-                                Ich lade dich ein, über Farbe und Bild mit dir selbst in Kontakt zu treten und einen kreativen
-                                Veränderungsprozess zu beginnen.
-                            </p>
-                            <div
-                                className="flex flex-wrap gap-4 pt-2 animate-fade-in"
-                                style={{ animationDelay: "0.3s" }}
-                            >
-                                <Button asChild size="lg" className="text-base bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12 rounded-md transition-colors">
-                                    <a href="/kontakt">
-                                        Termin anfragen
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </a>
-                                </Button>
-                                <Button asChild variant="outline" size="lg" className="text-base border-input hover:bg-accent hover:text-accent-foreground px-8 h-12 rounded-md">
-                                    <a href="/so-arbeite-ich">So arbeite ich</a>
-                                </Button>
-                            </div>
-                        </div>
+            <section className="relative py-24 md:py-32 lg:py-40 overflow-hidden">
+                {/* Sharp background image layer */}
+                <div
+                    className="absolute inset-0 hero-bg-sharp"
+                    style={{
+                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                    }}
+                />
+                <style>{`
+                    .hero-bg-sharp { background-position: right center; }
+                    @media (min-width: 768px) {
+                        .hero-bg-sharp { background-position: center; }
+                    }
+                `}</style>
+                {/* Mobile: Full blur overlay */}
+                <div
+                    className="absolute inset-0 md:hidden"
+                    style={{
+                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "right center",
+                        backgroundRepeat: "no-repeat",
+                        filter: "blur(8px)",
+                    }}
+                />
+                {/* Mobile: Full white overlay for text readability */}
+                <div
+                    className="absolute inset-0 md:hidden"
+                    style={{
+                        background: "rgba(255,255,255,0.75)",
+                    }}
+                />
 
-                        <div className="relative animate-fade-in-up md:pl-10" style={{ animationDelay: "0.2s" }}>
-                            <div className="relative rounded-[2rem] overflow-hidden shadow-xl aspect-square w-full max-w-sm mx-auto lg:max-w-none">
-                                <img
-                                    src="/hero-image.webp"
-                                    alt="Mikela Blanck im Malraum"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
+                {/* Desktop: White gradient overlay for text readability - solid until text box edge, then fades */}
+                <div
+                    className="absolute inset-0 hidden md:block"
+                    style={{
+                        background: "linear-gradient(to right, rgba(255,255,255,0.7) 0px, rgba(255,255,255,0.6) 720px, rgba(255,255,255,0) 920px)",
+                    }}
+                />
+
+                <div className="container relative z-10">
+                    <div className="max-w-2xl space-y-6 text-left">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] animate-fade-in">
+                            Wenn Worte nicht mehr weiterhelfen …
+                        </h1>
+                        <p
+                            className="text-xl md:text-2xl text-primary italic w-full animate-fade-in"
+                            style={{ animationDelay: "0.1s" }}
+                        >
+                            … dann kann beim Malen die Lösung im Bild entstehen.
+                        </p>
+                        <p
+                            className="text-lg text-muted-foreground max-w-xl animate-fade-in leading-relaxed"
+                            style={{ animationDelay: "0.2s" }}
+                        >
+                            Ich lade dich ein, über Farbe und Bild mit dir selbst in Kontakt zu treten und einen kreativen
+                            Veränderungsprozess zu beginnen.
+                        </p>
+                        <div
+                            className="flex flex-wrap gap-4 pt-2 animate-fade-in"
+                            style={{ animationDelay: "0.3s" }}
+                        >
+                            <Button asChild size="lg" className="text-base bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12 rounded-md transition-colors">
+                                <a href="/kontakt">
+                                    Termin anfragen
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                </a>
+                            </Button>
+                            <Button asChild variant="outline" size="lg" className="text-base border-input hover:bg-accent hover:text-accent-foreground px-8 h-12 rounded-md">
+                                <a href="/so-arbeite-ich">So arbeite ich</a>
+                            </Button>
                         </div>
                     </div>
                 </div>
