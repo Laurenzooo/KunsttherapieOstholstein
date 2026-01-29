@@ -122,7 +122,7 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                 <div
                     className="absolute inset-0 hidden md:block"
                     style={{
-                        background: "linear-gradient(to right, rgba(255,255,255,0.7) 0px, rgba(255,255,255,0.6) 720px, rgba(255,255,255,0) 920px)",
+                        background: "linear-gradient(to right, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0.5) 720px, rgba(255,255,255,0.1) 920px)",
                     }}
                 />
 
