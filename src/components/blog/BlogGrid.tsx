@@ -82,7 +82,7 @@ export const BlogGrid = ({ posts, categories }: BlogGridProps) => {
                 >
                     Alle
                 </button>
-                {categories.map((category) => (
+                {categories.filter(c => c.title.toLowerCase() !== 'neu').map((category) => (
                     <button
                         key={category.title}
                         onClick={() => handleCategoryClick(category.title)}
