@@ -1,3 +1,6 @@
+# Custom 404 Error Page
+ErrorDocument 404 /404.html
+
 # 301 Redirects
 Redirect 301 /maltherapie https://kunsttherapie-ostholstein.de/blog/lom-maltherapie/
 
