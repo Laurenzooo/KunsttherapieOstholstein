@@ -27,6 +27,7 @@ jobs:
       run: npm run build
       env:
         PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}  
+        PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
 
     - name: 📂 Sync files to Netcup Live
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
