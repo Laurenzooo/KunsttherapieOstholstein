@@ -9,7 +9,7 @@ export function Footer() {
           <div className="space-y-4">
             <div>
               <a href="/" className="inline-block mb-2">
-                <img src="/MomLogo.svg" alt="Mikela Blanck Kunsttherapie" className="h-10 w-auto" />
+                <img src="/MomLogo.svg" alt="Mikela Blanck Kunsttherapie" className="h-10 w-auto" loading="lazy" />
               </a>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">

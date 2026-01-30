@@ -3,7 +3,6 @@ import { Layout } from "@/components/layout/Layout";
 export default function Datenschutz({ currentPath }: { currentPath?: string }) {
   return (
     <Layout currentPath={currentPath}>
-
       <section className="py-16 md:py-20">
         <div className="container">
           <div className="max-w-3xl mx-auto prose prose-lg">
@@ -12,6 +11,7 @@ export default function Datenschutz({ currentPath }: { currentPath?: string }) {
             </h1>
 
             <div className="space-y-8 text-muted-foreground">
+              {/* SECTION 1 */}
               <div>
                 <h2 className="text-xl font-light text-foreground mb-2">
                   1. Datenschutz auf einen Blick
@@ -24,76 +24,127 @@ export default function Datenschutz({ currentPath }: { currentPath?: string }) {
                 </p>
               </div>
 
+              {/* SECTION 2 */}
               <div>
                 <h2 className="text-xl font-light text-foreground mb-2">
                   2. Verantwortliche Stelle
                 </h2>
                 <p className="text-sm">
-                  Mikela Blanck<br />
+                  Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
+                </p>
+                <p className="text-sm mt-2">
+                  Mikela Blanck Kunsttherapie<br />
                   Friedrichstraße 8c<br />
                   23701 Eutin<br />
                   E-Mail: hallo@kunsttherapie-ostholstein.de<br />
                   Telefon: 0151 74272814
                 </p>
-              </div>
-
-              <div>
-                <h2 className="text-xl font-light text-foreground mb-2">
-                  3. Datenerfassung auf dieser Website
-                </h2>
-
-                <h3 className="font-light text-foreground mt-4 mb-2">Kontaktformular</h3>
-                <p className="text-sm">
-                  Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben
-                  aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten
-                  zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns
-                  gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
-                </p>
-
-                <h3 className="font-light text-foreground mt-4 mb-2">E-Mail-Kontakt</h3>
-                <p className="text-sm">
-                  Wenn Sie uns per E-Mail kontaktieren, wird Ihre Anfrage inklusive aller daraus
-                  hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung
-                  Ihres Anliegens bei uns gespeichert und verarbeitet.
+                <p className="text-sm mt-4">
+                  Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder
+                  gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von
+                  personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.
                 </p>
               </div>
 
+              {/* SECTION 3 */}
               <div>
-                <h2 className="text-xl font-light text-foreground mb-2">
-                  4. Ihre Rechte
+                <h2 className="text-xl font-light text-foreground mb-4">
+                  3. Allgemeine Hinweise und Pflichtinformationen
                 </h2>
+
+                <h3 className="font-light text-foreground mb-2">SSL- bzw. TLS-Verschlüsselung</h3>
+                <p className="text-sm mb-4">
+                  Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung
+                  vertraulicher Inhalte, wie zum Beispiel Anfragen, die Sie an uns als
+                  Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte
+                  Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von "http://"
+                  auf "https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+                </p>
+
+                <h3 className="font-light text-foreground mb-2">Schweigepflicht</h3>
+                <p className="text-sm mb-4">
+                  Als Heilpraktikerin für Psychotherapie unterliege ich der gesetzlichen
+                  Schweigepflicht gemäß § 203 StGB. Alle Informationen, die Sie mir im Rahmen
+                  einer therapeutischen Zusammenarbeit anvertrauen, werden streng vertraulich behandelt.
+                </p>
+
+                <h3 className="font-light text-foreground mb-2">Ihre Rechte (Auskunft, Berichtigung, Löschung)</h3>
                 <p className="text-sm">
-                  Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger
-                  und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben
-                  außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen.
-                  Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit
-                  an uns wenden.
+                  Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht
+                  auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren
+                  Herkunft und Empfänger und den Zweck der Datenverarbeitung und ggf. ein Recht auf
+                  Berichtigung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema
+                  personenbezogene Daten können Sie sich jederzeit an uns wenden.
                 </p>
                 <p className="text-sm mt-2">
                   Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.
                 </p>
               </div>
 
+              {/* SECTION 4 */}
               <div>
                 <h2 className="text-xl font-light text-foreground mb-2">
-                  5. Schweigepflicht
+                  4. Hosting und Server-Log-Files
                 </h2>
+                <h3 className="font-light text-foreground mt-4 mb-2">Externes Hosting (Netcup)</h3>
                 <p className="text-sm">
-                  Als Heilpraktikerin für Psychotherapie unterliege ich der gesetzlichen
-                  Schweigepflicht gemäß § 203 StGB. Alle Informationen, die Sie mir im Rahmen
-                  der therapeutischen Beziehung anvertrauen, werden streng vertraulich behandelt.
+                  Wir hosten unsere Website bei der Netcup GmbH (Daimlerstraße 25, 76185 Karlsruhe).
+                  Die Server befinden sich in Deutschland (Nürnberg).
+                  Beim Besuch unserer Website erfasst der Hoster automatisch Informationen in so
+                  genannten Server-Log-Files, die Ihr Browser automatisch an uns übermittelt. Dies sind:
+                </p>
+                <ul className="text-sm list-disc pl-5 mt-2 space-y-1">
+                  <li>Browsertyp und Browserversion</li>
+                  <li>verwendetes Betriebssystem</li>
+                  <li>Referrer URL</li>
+                  <li>Hostname des zugreifenden Rechners</li>
+                  <li>Uhrzeit der Serveranfrage</li>
+                  <li>IP-Adresse (ggf. in anonymisierter Form)</li>
+                </ul>
+                <p className="text-sm mt-4">
+                  Diese Daten sind technisch notwendig, um Ihnen unsere Website anzuzeigen und die
+                  Stabilität und Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
                 </p>
               </div>
 
+              {/* SECTION 5 */}
               <div>
                 <h2 className="text-xl font-light text-foreground mb-2">
-                  6. SSL-Verschlüsselung
+                  5. Datenerfassung auf dieser Website
                 </h2>
+
+                <h3 className="font-light text-foreground mt-4 mb-2">Cookies</h3>
                 <p className="text-sm">
-                  Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung
-                  vertraulicher Inhalte eine SSL-Verschlüsselung. Eine verschlüsselte Verbindung
-                  erkennen Sie daran, dass die Adresszeile des Browsers von "http://" auf "https://"
-                  wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+                  <strong>Diese Website verwendet keine Cookies.</strong> Es werden keine Tracking-Cookies
+                  eingesetzt und es werden keine Daten dauerhaft auf Ihrem Endgerät gespeichert.
+                </p>
+
+                <h3 className="font-light text-foreground mt-4 mb-2">Umami Analytics</h3>
+                <p className="text-sm">
+                  Wir nutzen zur statistischen Auswertung der Besucherzugriffe das Analyse-Tool
+                  "Umami". Umami ist eine datenschutzfreundliche Alternative zu gängigen Tools.
+                  <strong>Umami verwendet keine Cookies</strong> und speichert keine personenbezogenen
+                  Daten. IP-Adressen werden anonymisiert. Die Analyse dient ausschließlich der
+                  Optimierung unserer Website.
+                </p>
+
+                <h3 className="font-light text-foreground mt-4 mb-2">Lokal gehostete Schriften</h3>
+                <p className="text-sm">
+                  Diese Website nutzt zur einheitlichen Darstellung von Schriftarten Web Fonts (Inter).
+                  Diese sind <strong>lokal auf unserem Server</strong> bei Netcup installiert. Eine
+                  Verbindung zu Servern von Drittanbietern (z.B. Google Fonts) findet nicht statt,
+                  sodass keine Daten an externe Schriftanbieter übertragen werden.
+                </p>
+
+                <h3 className="font-light text-foreground mt-4 mb-2">Kontaktformular und E-Mail</h3>
+                <p className="text-sm">
+                  Wenn Sie uns per Kontaktformular oder E-Mail Anfragen zukommen lassen, werden Ihre
+                  Angaben inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung
+                  der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten
+                  geben wir nicht ohne Ihre Einwilligung weiter. Die Verarbeitung dieser Daten erfolgt
+                  auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung
+                  eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen
+                  erforderlich ist.
                 </p>
               </div>
             </div>

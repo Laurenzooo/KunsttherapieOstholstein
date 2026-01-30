@@ -45,11 +45,10 @@ const socialImageURL = new URL(image, Astro.url);
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImageURL} />
 
-		<!-- Google Fonts: Inter -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+		<!-- Umami Analytics -->
+		<script defer src="https://cloud.umami.is/script.js" data-website-id="0a01a9e3-c812-4048-a25c-a0f575769be4"></script>
 	</head>
 	<body>
 		<slot />
