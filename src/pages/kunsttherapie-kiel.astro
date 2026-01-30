@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import KielSEOPage from '../components/pages-migration/KielSEOPage.tsx';
+---
+
+<Layout 
+	title="Kunsttherapie für Kiel & Umgebung | Mikela Blanck" 
+	description="Kunsttherapie in der Nähe von Kiel. Begleitung bei Trauer, Abschied und persönlichen Themen in Eutin. Entdecken Sie die heilende Kraft des Malens.">
+	<KielSEOPage client:load currentPath={Astro.url.pathname} />
+</Layout>

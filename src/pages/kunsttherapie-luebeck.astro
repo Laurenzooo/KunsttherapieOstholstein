@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LuebeckSEOPage from '../components/pages-migration/LuebeckSEOPage.tsx';
+---
+
+<Layout 
+	title="Kunsttherapie für Lübeck & Umgebung | Mikela Blanck" 
+	description="Kunsttherapie in der Nähe von Lübeck. Begleitung bei Trauer, Abschied und persönlichen Themen in Eutin. Entdecken Sie die heilende Kraft des Malens.">
+	<LuebeckSEOPage client:load currentPath={Astro.url.pathname} />
+</Layout>

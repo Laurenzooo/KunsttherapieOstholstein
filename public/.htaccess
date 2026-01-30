@@ -1,6 +1,11 @@
 # Custom 404 Error Page
 ErrorDocument 404 /404.html
 
+# WWW to Non-WWW Redirect
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.kunsttherapie-ostholstein\.de [NC]
+RewriteRule ^(.*)$ https://kunsttherapie-ostholstein.de/$1 [L,R=301]
+
 # 301 Redirects
 Redirect 301 /maltherapie https://kunsttherapie-ostholstein.de/blog/lom-maltherapie/
 
