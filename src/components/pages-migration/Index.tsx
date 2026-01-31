@@ -163,7 +163,7 @@ export default function Index({ currentPath }: { currentPath?: string }) {
             </section>
 
             {/* Help Topics Section */}
-            <section className="py-16 md:py-24 bg-card">
+            <section id="hilfe" className="py-16 md:py-24 bg-card">
                 <div className="container">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-light text-foreground mb-4">

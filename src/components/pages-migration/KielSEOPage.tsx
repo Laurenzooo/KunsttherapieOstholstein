@@ -8,17 +8,43 @@ export default function KielSEOPage({ currentPath }: { currentPath?: string }) {
         <Layout currentPath={currentPath}>
             {/* Hero Section */}
             <section className="relative py-24 md:py-32 lg:py-40 overflow-hidden">
+                {/* Sharp background image layer */}
                 <div
                     className="absolute inset-0 hero-bg-sharp"
                     style={{
                         backgroundImage: "url('/assets/hero_background.webp')",
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
                     }}
                 />
+                <style>{`
+                    .hero-bg-sharp { background-position: right center; }
+                    @media (min-width: 768px) {
+                        .hero-bg-sharp { background-position: center; }
+                    }
+                `}</style>
+                {/* Mobile: Full blur overlay */}
                 <div
-                    className="absolute inset-0"
+                    className="absolute inset-0 md:hidden"
+                    style={{
+                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "right center",
+                        backgroundRepeat: "no-repeat",
+                        filter: "blur(8px)",
+                    }}
+                />
+                {/* Mobile: Full white overlay for text readability */}
+                <div
+                    className="absolute inset-0 md:hidden"
+                    style={{
+                        background: "rgba(255,255,255,0.75)",
+                    }}
+                />
+
+                {/* Desktop: White gradient overlay for text readability - solid until text box edge, then fades */}
+                <div
+                    className="absolute inset-0 hidden md:block"
                     style={{
                         background: "linear-gradient(to right, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0.5) 720px, rgba(255,255,255,0.1) 920px)",
                     }}
@@ -26,16 +52,25 @@ export default function KielSEOPage({ currentPath }: { currentPath?: string }) {
 
                 <div className="container relative z-10">
                     <div className="max-w-2xl space-y-6 text-left">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1]">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] animate-fade-in">
                             Kunsttherapie für Kiel & Umgebung
                         </h1>
-                        <p className="text-xl md:text-2xl text-primary italic w-full">
+                        <p
+                            className="text-xl md:text-2xl text-primary italic w-full animate-fade-in"
+                            style={{ animationDelay: "0.1s" }}
+                        >
                             Heilung und persönliches Wachstum durch kreativen Ausdruck.
                         </p>
-                        <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+                        <p
+                            className="text-lg text-muted-foreground max-w-xl animate-fade-in leading-relaxed"
+                            style={{ animationDelay: "0.2s" }}
+                        >
                             Willkommen auf meiner Seite für Kunsttherapie. Ich begleite Menschen aus Kiel und der Umgebung auf ihrem Weg zu mehr Selbsterkenntnis und emotionaler Ausgeglichenheit.
                         </p>
-                        <div className="flex flex-wrap gap-4 pt-2">
+                        <div
+                            className="flex flex-wrap gap-4 pt-2 animate-fade-in"
+                            style={{ animationDelay: "0.3s" }}
+                        >
                             <Button asChild size="lg" className="text-base bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12 rounded-md transition-colors">
                                 <a href="/kontakt">
                                     Termin anfragen
