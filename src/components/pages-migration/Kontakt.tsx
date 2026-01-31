@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { businessInfo } from "@/config/businessInfo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -64,25 +65,25 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                 <ul className="space-y-4">
                   <li>
                     <a
-                      href="mailto:hallo@kunsttherapie-ostholstein.de"
+                      href={`mailto:${businessInfo.contact.email}`}
                       className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-md transition-all duration-300"
                     >
                       <Mail className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <p className="font-medium text-foreground">E-Mail</p>
-                        <p className="text-sm text-muted-foreground">hallo@kunsttherapie-ostholstein.de</p>
+                        <p className="text-sm text-muted-foreground">{businessInfo.contact.email}</p>
                       </div>
                     </a>
                   </li>
                   <li>
                     <a
-                      href="tel:+4915174272814"
+                      href={`tel:${businessInfo.contact.phoneValue}`}
                       className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-md transition-all duration-300"
                     >
                       <Phone className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <p className="font-medium text-foreground">Telefon</p>
-                        <p className="text-sm text-muted-foreground">0151 74272814</p>
+                        <p className="text-sm text-muted-foreground">{businessInfo.contact.phone}</p>
                       </div>
                     </a>
                   </li>
@@ -91,9 +92,9 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     <div>
                       <p className="font-medium text-foreground">Adresse</p>
                       <p className="text-sm text-muted-foreground">
-                        Friedrichstraße 8c
+                        {businessInfo.address.street}
                         <br />
-                        23701 Eutin
+                        {businessInfo.address.zip} {businessInfo.address.city}
                       </p>
                     </div>
                   </li>
@@ -101,7 +102,7 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     <Clock className="h-5 w-5 text-primary mt-0.5" />
                     <div>
                       <p className="font-medium text-foreground">Termine</p>
-                      <p className="text-sm text-muted-foreground">nach Absprache</p>
+                      <p className="text-sm text-muted-foreground">{businessInfo.openingHours.display}</p>
                     </div>
                   </li>
                 </ul>

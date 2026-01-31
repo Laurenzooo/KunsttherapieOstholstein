@@ -1,4 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
+import { businessInfo } from "@/config/businessInfo";
+
 
 export default function Datenschutz({ currentPath }: { currentPath?: string }) {
   return (
@@ -33,11 +35,11 @@ export default function Datenschutz({ currentPath }: { currentPath?: string }) {
                   Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
                 </p>
                 <p className="text-sm mt-2">
-                  Mikela Blanck Kunsttherapie<br />
-                  Friedrichstraße 8c<br />
-                  23701 Eutin<br />
-                  E-Mail: hallo@kunsttherapie-ostholstein.de<br />
-                  Telefon: 0151 74272814
+                  {businessInfo.name}<br />
+                  {businessInfo.address.street}<br />
+                  {businessInfo.address.zip} {businessInfo.address.city}<br />
+                  E-Mail: {businessInfo.contact.email}<br />
+                  Telefon: {businessInfo.contact.phone}
                 </p>
                 <p className="text-sm mt-4">
                   Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder

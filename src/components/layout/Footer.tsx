@@ -1,4 +1,6 @@
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { businessInfo } from "@/config/businessInfo";
+
 
 export function Footer() {
   return (
@@ -13,7 +15,7 @@ export function Footer() {
               </a>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Wenn Worte nicht mehr weiterhelfen, kann beim Malen die Lösung im Bild entstehen.
+              {businessInfo.description}
             </p>
           </div>
 
@@ -23,32 +25,32 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="mailto:hallo@kunsttherapie-ostholstein.de"
+                  href={`mailto:${businessInfo.contact.email}`}
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="h-4 w-4 flex-shrink-0" />
-                  hallo@kunsttherapie-ostholstein.de
+                  {businessInfo.contact.email}
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+4915174272814"
+                  href={`tel:${businessInfo.contact.phoneValue}`}
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Phone className="h-4 w-4 flex-shrink-0" />
-                  0151 74272814
+                  {businessInfo.contact.phone}
                 </a>
               </li>
               <li className="flex items-start gap-2 text-muted-foreground">
                 <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
                 <span>
-                  Friedrichstraße 8c<br />
-                  23701 Eutin
+                  {businessInfo.address.street}<br />
+                  {businessInfo.address.zip} {businessInfo.address.city}
                 </span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="h-4 w-4 flex-shrink-0" />
-                Mo–Fr 10:00–19:00 (nach Termin)
+                {businessInfo.openingHours.display}
               </li>
             </ul>
           </div>

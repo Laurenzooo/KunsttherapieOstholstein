@@ -1,4 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
+import { businessInfo } from "@/config/businessInfo";
+
 
 export default function Impressum({ currentPath }: { currentPath?: string }) {
   return (
@@ -16,10 +18,9 @@ export default function Impressum({ currentPath }: { currentPath?: string }) {
                   Angaben gemäß § 5 TMG
                 </h2>
                 <p>
-                  Mikela Blanck<br />
-                  Kunsttherapie<br />
-                  Friedrichstraße 8c<br />
-                  23701 Eutin
+                  {businessInfo.name}<br />
+                  {businessInfo.address.street}<br />
+                  {businessInfo.address.zip} {businessInfo.address.city}
                 </p>
               </div>
 
@@ -28,8 +29,8 @@ export default function Impressum({ currentPath }: { currentPath?: string }) {
                   Kontakt
                 </h2>
                 <p>
-                  Telefon: 0151 74272814<br />
-                  E-Mail: hallo@kunsttherapie-ostholstein.de
+                  Telefon: {businessInfo.contact.phone}<br />
+                  E-Mail: {businessInfo.contact.email}
                 </p>
               </div>
 

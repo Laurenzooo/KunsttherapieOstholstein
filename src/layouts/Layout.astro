@@ -1,5 +1,6 @@
 ---
 import '../index.css';
+import { businessInfo } from '../config/businessInfo';
 
 interface Props {
 	title?: string;
@@ -17,6 +18,34 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.url);
+
+const schema = {
+	"@context": "https://schema.org",
+	"@type": "HealthAndBeautyBusiness",
+	"name": businessInfo.name,
+	"description": description,
+	"url": Astro.site ? Astro.site.href : businessInfo.url,
+	"logo": new URL("/MomLogo.svg", Astro.url).href,
+	"image": socialImageURL.href,
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": businessInfo.address.street,
+		"addressLocality": businessInfo.address.city,
+		"postalCode": businessInfo.address.zip,
+		"addressCountry": businessInfo.address.country
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": businessInfo.geo.latitude,
+		"longitude": businessInfo.geo.longitude
+	},
+	"telephone": businessInfo.contact.phoneValue,
+	"email": businessInfo.contact.email,
+	"openingHours": businessInfo.openingHours.schema,
+	"sameAs": [
+		businessInfo.googleMaps
+	]
+};
 ---
 
 <!doctype html>
@@ -49,6 +78,9 @@ const socialImageURL = new URL(image, Astro.url);
 
 		<!-- Umami Analytics -->
 		<script defer src="https://cloud.umami.is/script.js" data-website-id="0a01a9e3-c812-4048-a25c-a0f575769be4"></script>
+
+		<!-- Local Business Schema -->
+		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 	</head>
 	<body>
 		<slot />

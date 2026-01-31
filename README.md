@@ -4,6 +4,9 @@
 
 **URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
+> [!IMPORTANT]
+> **AI Agents / Developers**: Please read [.agent/instructions.md](file:///.agent/instructions.md) before making changes to understand the project architecture (Single Source of Truth, GDPR Map, etc.).
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
