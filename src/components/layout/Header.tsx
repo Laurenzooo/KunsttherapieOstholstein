@@ -21,7 +21,7 @@ export function Header({ currentPath }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
-      <div className="container flex h-20 items-center justify-between">
+      <div className="container flex h-20 items-center justify-between gap-4">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
           <img src="/MomLogo.svg" alt="Mikela Blanck Kunsttherapie" className="h-9 md:h-11 w-auto" />
