@@ -2,7 +2,7 @@ import { ArrowRight, HelpCircle, Brain, Sparkles, Target, Lightbulb, Layers } fr
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 const handsImage = "/assets/MikelaBlanck_SoArbeiteIch-DY8h2Pt5.webp";
-const malraumImage = "/assets/MikelaBlanck_Malraum-mtSuT8Kt.webp";
+const malraumImage = "/assets/malraum-mit-lascaux-gouache-farben.webp";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
@@ -215,7 +215,7 @@ export default function MethodeAblauf({ currentPath }: { currentPath?: string })
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
               Ein besonderer Ort.
             </p>
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-[6fr_7fr] gap-8 items-center">
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <img
                   src={malraumImage}

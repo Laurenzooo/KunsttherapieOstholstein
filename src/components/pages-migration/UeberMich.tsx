@@ -52,12 +52,12 @@ const values = [
 export default function UeberMich({ currentPath }: { currentPath?: string }) {
   return (
     <Layout currentPath={currentPath}>
-      {/* Hero */}
-      <section className="py-16 md:py-20">
+      {/* Hero / Introduction Section */}
+      <section className="py-16 md:py-24 bg-card">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
             {/* Portrait */}
-            <div className="aspect-[4/5] rounded-lg overflow-hidden order-2 md:order-1">
+            <div className="aspect-[4/5] rounded-lg overflow-hidden order-1 md:order-2">
               <img
                 src={portraitImage}
                 alt="Mikela Blanck - Kunsttherapeutin"
@@ -66,14 +66,71 @@ export default function UeberMich({ currentPath }: { currentPath?: string }) {
             </div>
 
             {/* Text */}
-            <div className="space-y-6 order-1 md:order-2">
-              <h1 className="text-4xl md:text-6xl font-light text-foreground">
+            <div className="space-y-6 order-2 md:order-1">
+              <h1 className="text-4xl md:text-5xl font-light text-foreground">
                 Über mich
               </h1>
-              <p className="text-lg text-muted-foreground">
-                Seit 25 Jahren lebe ich im schönen Ostholstein und ich liebe es.
-                Ich habe drei erwachsene wunderbare hausflüchtige Kinder und bin,
-                wie wir alle, auf der spannenden Reise des Lebens.
+              <h2 className="text-xl md:text-2xl text-primary italic">
+                Mein Weg und meine Begleitung heute
+              </h2>
+              <div className="space-y-5 text-base text-muted-foreground leading-relaxed">
+                <p>
+                  Mein Weg schlängelt sich nun schon seit über 55 Jahren durch
+                  diese Welt. Es gab Zeiten, in denen ich ihm hektisch
+                  nachgelaufen bin, andere Jahre, in denen ich ihn ruhig und
+                  bewusst beschritten habe, und Phasen, in denen ich dort ging,
+                  wo es noch keinen Weg gab.
+                </p>
+                <p>
+                  Diese eigenen Erfahrungen sind Teil meiner Geschichte. Durch
+                  sie habe ich gelernt, wie wertvoll ein Raum ist, in dem alles
+                  sein darf, und wie heilsam es sein kann, dem Inneren auf die
+                  Spur zu kommen. Und zwar nicht über Worte allein, sondern über
+                  den malerischen Ausdruck im Bild und in der Bewegung mit
+                  Farbe.
+                </p>
+                <p>
+                  In meiner Arbeit lade ich dich ein, anzukommen, zuzulassen und
+                  neu zu vertrauen. Malen und Gestalten öffnen einen Zugang zu
+                  dem, was sich oft nicht in Worte fassen lässt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Extended Introduction */}
+      <section className="py-16 md:py-20">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            {/* Image */}
+            <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <img
+                src="/assets/MikelaBlanck_Malraum-mtSuT8Kt.webp"
+                alt="Der Malraum"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Text */}
+            <div className="space-y-6">
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Das Malen kann zeigen, wo althergebrachte Denkmuster sitzen, wo vielleicht schon
+                Veränderungen gewachsen sind aber auch wo sich innere
+                Qualitäten zeigen und neue Perspektiven entstehen dürfen.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Ich begleite dich achtsam und wertfrei — in Einzelterminen, in
+                kleinen Gruppen oder in besonderen thematischen Angeboten.
+                Mein Raum ist so gestaltet, dass du dich sicher und angenommen
+                fühlen kannst.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Beim Malen geht es nicht um Können oder richtig oder falsch.
+                Es geht darum, dich selbst achtsam wahrzunehmen und zu
+                entdecken. Dann kann Ruhe entstehen, Klarheit wachsen und eine
+                Lösung zeigt sich dann oft von selber.
               </p>
             </div>
           </div>

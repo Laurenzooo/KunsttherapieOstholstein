@@ -18,11 +18,11 @@ const pmOffering = {
     ],
     note: "Kinder & Jugendliche zahlen 69€",
     qualities: [
-      "Kein Leistungsdruck – keine 'richtigen' Bilder",
+      "Großformatiges Malen mit Lascaux Gouache",
+      "Freies Malen zu deinem Thema",
       "Ureigene Bilder – tiefer Kontakt mit dir selbst",
       "Durchgehende Begleitung im Malprozess",
-      "Keine Interpretation oder Bewertung",
-      "Stärkung deiner Ressourcen"
+      "Themenaufdeckend, Stärkung deiner Ressourcen"
     ]
   },
   gruppe: {
@@ -40,11 +40,11 @@ const pmOffering = {
     ],
     note: undefined,
     qualities: [
-      "Kein Leistungsdruck – keine 'richtigen' Bilder",
+      "Großformatiges Malen mit Lascaux Gouache",
+      "Freies Malen zu deinem Thema",
       "Ureigene Bilder – tiefer Kontakt mit dir selbst",
       "Durchgehende Begleitung im Malprozess",
-      "Keine Interpretation oder Bewertung",
-      "Stärkung deiner Ressourcen"
+      "Themenaufdeckend, Stärkung deiner Ressourcen"
     ]
   }
 };
@@ -63,11 +63,11 @@ const lomOffering = {
     ],
     note: "Kinder & Jugendliche zahlen 69€",
     qualities: [
-      "Keine Bildinterpretation oder Analyse",
+      "Großformatiges Malen mit Lascaux Gouache",
       "Strukturierte Vorgehensweise mit bewährtem Protokoll",
       "Arbeit mit Bildkorrekturen und Metaphern",
       "Entlastung durch positive, klare innere Bilder",
-      "Lösungsorientiert wirksam bei Symptomen & Traumata"
+      "Lösungsorientiert wirksam bei Symptomen, Traumata und allen anderen Anliegen"
     ]
   },
   gruppe: {
@@ -84,11 +84,11 @@ const lomOffering = {
     ],
     note: undefined,
     qualities: [
-      "Keine Bildinterpretation oder Analyse",
+      "Großformatiges Malen mit Lascaux Gouache",
       "Strukturierte Vorgehensweise mit bewährtem Protokoll",
       "Arbeit mit Bildkorrekturen und Metaphern",
       "Entlastung durch positive, klare innere Bilder",
-      "Lösungsorientiert wirksam bei Symptomen & Traumata"
+      "Lösungsorientiert wirksam bei Symptomen, Traumata und allen anderen Anliegen"
     ]
   }
 };
@@ -110,9 +110,10 @@ const bildASetOffering = {
       "Intuitives Arbeiten mit Bildkarten",
       "Arbeit mit Übertragungsprozessen",
       "Gemeinsame Bildinterpretation & Analyse",
-      "Niedrigschwellig & zur Psychohygiene",
-      "Entwicklung eigener Kartensets",
-      "Kleinformatig & Online möglich"
+      "Entwicklung eigener Kartensets möglich",
+      "Niedrigschwellige Selbsterfahrung und Psychohygiene",
+      "Hilfreich für Menschen in helfenden Berufen",
+      "Kleinformatig mit unterschiedlichen Farben & Online möglich"
     ]
   },
   gruppe: {
@@ -132,9 +133,10 @@ const bildASetOffering = {
       "Intuitives Arbeiten mit Bildkarten",
       "Arbeit mit Übertragungsprozessen",
       "Gemeinsame Bildinterpretation & Analyse",
-      "Niedrigschwellig & zur Psychohygiene",
-      "Entwicklung eigener Kartensets",
-      "Kleinformatig & Online möglich"
+      "Entwicklung eigener Kartensets möglich",
+      "Niedrigschwellige Selbsterfahrung und Psychohygiene",
+      "Hilfreich für Menschen in helfenden Berufen",
+      "Kleinformatig mit unterschiedlichen Farben & Online möglich"
     ]
   }
 };
