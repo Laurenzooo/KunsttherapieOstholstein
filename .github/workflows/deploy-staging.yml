@@ -40,6 +40,7 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD_STAGING }}
         local-dir: ./dist/    # Dein gebauter Ordner (bei Astro/Vite meist 'dist/')
         server-dir: ./        # Ziel auf dem Server (da der User schon im richtigen Ordner ist)
+        port: 21
         security: loose
         exclude: |
           **/.git*
