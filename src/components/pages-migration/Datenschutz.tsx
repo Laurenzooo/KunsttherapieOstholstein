@@ -115,10 +115,13 @@ export default function Datenschutz({ currentPath }: { currentPath?: string }) {
                   5. Datenerfassung auf dieser Website
                 </h2>
 
-                <h3 className="font-light text-foreground mt-4 mb-2">Cookies</h3>
+                <h3 className="font-light text-foreground mt-4 mb-2">Technisch notwendige Speicherung (LocalStorage)</h3>
                 <p className="text-sm">
-                  <strong>Diese Website verwendet keine Cookies.</strong> Es werden keine Tracking-Cookies
-                  eingesetzt und es werden keine Daten dauerhaft auf Ihrem Endgerät gespeichert.
+                  Diese Website verwendet keine Tracking-Cookies. Wir nutzen jedoch den lokalen Speicher Ihres Browsers (LocalStorage),
+                  um technisch notwendige Informationen oder von Ihnen getroffene Einstellungen (wie z. B. die Zustimmung zur Anzeige
+                  externer Inhalte) zu speichern. Dies dient der Benutzerfreundlichkeit, damit Sie Ihre Auswahl nicht bei jedem
+                  Seitenaufruf erneut treffen müssen. Diese Speicherung erfolgt auf Grundlage unserer berechtigten Interessen
+                  gemäß Art. 6 Abs. 1 lit. f DSGVO.
                 </p>
 
                 <h3 className="font-light text-foreground mt-4 mb-2">Umami Analytics</h3>
@@ -136,6 +139,16 @@ export default function Datenschutz({ currentPath }: { currentPath?: string }) {
                   Diese sind <strong>lokal auf unserem Server</strong> bei Netcup installiert. Eine
                   Verbindung zu Servern von Drittanbietern (z.B. Google Fonts) findet nicht statt,
                   sodass keine Daten an externe Schriftanbieter übertragen werden.
+                </p>
+
+                <h3 className="font-light text-foreground mt-4 mb-2">Google Maps</h3>
+                <p className="text-sm">
+                  Wir binden auf einigen Unterseiten Kartenmaterial des Dienstes "Google Maps" ein.
+                  Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
+                  Um den Datenschutz auf unserer Website zu gewährleisten, ist Google Maps deaktiviert, wenn
+                  Sie unsere Website das erste Mal betreten. Eine Verbindung zu den Servern von Google wird
+                  erst hergestellt, wenn Sie die Karte aktiv per Klick laden (Zwei-Klick-Lösung). In diesem
+                  Fall wird Ihre IP-Adresse an Google übertragen.
                 </p>
 
                 <h3 className="font-light text-foreground mt-4 mb-2">Kontaktformular und E-Mail</h3>

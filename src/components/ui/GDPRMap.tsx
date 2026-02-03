@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MapPin } from "lucide-react";
 
 interface GDPRMapProps {
@@ -14,6 +14,14 @@ interface GDPRMapProps {
  */
 export function GDPRMap({ height = "400px", className = "" }: GDPRMapProps) {
     const [mapLoaded, setMapLoaded] = useState(false);
+    const CONSENT_KEY = "gdpr_google_maps_consent";
+
+    useEffect(() => {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === "true") {
+            setMapLoaded(true);
+        }
+    }, []);
 
     // Google Maps API key from environment variable
     const apiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
@@ -26,6 +34,7 @@ export function GDPRMap({ height = "400px", className = "" }: GDPRMapProps) {
 
     const handleLoadMap = () => {
         setMapLoaded(true);
+        localStorage.setItem(CONSENT_KEY, "true");
     };
 
     return (

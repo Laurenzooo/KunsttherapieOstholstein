@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MethodFinder from '../components/method-finder/MethodFinder.tsx';
+import { client } from '../lib/sanity';
+
+// Fetch the LOM blog post for display in the result section
+const lomBlogPost = await client.fetch(`*[_type == "post" && slug.current == "lom-maltherapie"][0] {
+  title,
+  subheading,
+  "slug": slug.current,
+  mainImage,
+  publishedAt,
+  "categories": categories[]->title
+}`);
+---
+
+<Layout 
+	title="Methoden-Finder | Kunsttherapie Ostholstein"
+	description="Finde heraus, welche kunsttherapeutische Methode am besten zu dir passt. Personenorientiertes Malen, Lösungsorientiertes Malen oder BildASet."
+>
+	<MethodFinder client:load currentPath={Astro.url.pathname} lomBlogPost={lomBlogPost} />
+</Layout>
