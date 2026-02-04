@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="bg-card border-t border-border">
       <div className="container py-12 md:py-16">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="space-y-4">
             <div>
@@ -82,6 +82,23 @@ export function Footer() {
               <li>
                 <a href="/kontakt" className="text-muted-foreground hover:text-primary transition-colors">
                   Kontakt
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Regionen */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-foreground">Regionen</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="/kunsttherapie-luebeck" className="text-muted-foreground hover:text-primary transition-colors">
+                  Lübeck & Umgebung
+                </a>
+              </li>
+              <li>
+                <a href="/kunsttherapie-kiel" className="text-muted-foreground hover:text-primary transition-colors">
+                  Kiel & Umgebung
                 </a>
               </li>
             </ul>

@@ -1,6 +1,7 @@
 import { ArrowRight, Heart, Users, Compass, Brain, Zap, Sparkles, HeartCrack, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { GDPRMap } from "@/components/ui/GDPRMap";
 import heroImage from "@/assets/hero-therapy.jpg?url";
 import handsImage from "@/assets/hands-support.jpg?url";
 
@@ -293,6 +294,43 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                     <p className="text-center mt-10 text-xs text-muted-foreground italic">
                         Hinweis: Die Namen der Klienten wurden zum Schutz der Privatsphäre anonymisiert.
                     </p>
+                </div>
+            </section>
+
+            {/* Service Area Section */}
+            <section className="py-16 md:py-24 bg-card">
+                <div className="container">
+                    <div className="max-w-6xl mx-auto space-y-12">
+                        <div className="text-center">
+                            <h2 className="text-3xl md:text-4xl font-light text-foreground">
+                                Kunsttherapie für die Region & Online
+                            </h2>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-12 items-stretch">
+                            {/* Map Column */}
+                            <div className="w-full order-2 md:order-1 h-full">
+                                <GDPRMap height="100%" />
+                            </div>
+
+                            {/* Text Column */}
+                            <div className="space-y-6 order-1 md:order-2">
+                                <div className="space-y-4">
+                                    <p className="text-base text-muted-foreground leading-relaxed">
+                                        Mein Atelier befindet sich zentral in Eutin in Ostholstein, im Herzen der Holsteinischen Schweiz. Ich bin für Menschen aus dem gesamten Raum Schleswig-Holstein da – zum Beispiel aus <a href="/kunsttherapie-luebeck" className="text-primary hover:underline">Lübeck</a>, <a href="/kunsttherapie-kiel" className="text-primary hover:underline">Kiel</a>, Malente, Plön, Neustadt oder Heiligenhafen.
+                                    </p>
+                                    <p className="text-base text-muted-foreground leading-relaxed">
+                                        Auch eine längere Anfahrt kann sich lohnen und oft schon als wertvoller Puffer dienen, um den Alltag hinter sich zu lassen und in die Ruhe der Natur einzutauchen.
+                                    </p>
+                                </div>
+                                <div className="p-6 rounded-xl bg-background border border-border shadow-sm">
+                                    <h3 className="text-xl font-light text-foreground mb-3">Ortsunabhängig: Online-Kunsttherapie</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                        Sollte dir der Weg nach Eutin nicht möglich sein, biete ich mit der bildASet-Methode auch die Möglichkeit für Online-Sitzungen an. So können wir ganz flexibel und ortsunabhängig an deinem Anliegen arbeiten.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
