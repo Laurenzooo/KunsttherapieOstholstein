@@ -1,149 +1,13 @@
 import { useState, useRef, useEffect, createContext, useContext, useCallback } from "react";
-import { ArrowRight, Clock, User, Users, Euro, Heart, Layers, Calendar, Check } from "lucide-react";
+import { ArrowRight, Clock, User, Users, Euro, Heart, Layers, Calendar, Check, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Layout } from "@/components/layout/Layout";
 import { cn } from "@/lib/utils";
+import { pmOffering, lomOffering, bildASetOffering, type MethodOffering } from "@/data/offerings";
 
-const pmOffering = {
-  einzeltermin: {
-    subtitle: "Erwachsene & Jugendliche",
-    icon: Clock,
-    details: [
-      { label: "Voraussetzung", value: "keine" },
-      { label: "Dauer", value: "ca. 75 Minuten" },
-      { label: "Termine", value: "nach Absprache" },
-    ],
-    pricing: [
-      { label: "Einzeltermin", value: "79 €" }
-    ],
-    note: "Kinder & Jugendliche zahlen 69€",
-    qualities: [
-      "Großformatiges Malen mit Lascaux Gouache",
-      "Freies Malen zu deinem Thema",
-      "Ureigene Bilder – tiefer Kontakt mit dir selbst",
-      "Durchgehende Begleitung im Malprozess",
-      "Themenaufdeckend, Stärkung deiner Ressourcen"
-    ]
-  },
-  gruppe: {
-    subtitle: "Erwachsene",
-    icon: Users,
-    details: [
-      { label: "Voraussetzung", value: "vorheriger Einzeltermin" },
-      { label: "Dauer", value: "ca. 120 Minuten" },
-      { label: "Termine", value: "nach Absprache" },
-      { label: "Gruppe", value: "2–5 Personen" },
+type OfferingData = MethodOffering;
 
-    ],
-    pricing: [
-      { label: "Pro Person", value: "49 €" }
-    ],
-    note: undefined,
-    qualities: [
-      "Großformatiges Malen mit Lascaux Gouache",
-      "Freies Malen zu deinem Thema",
-      "Ureigene Bilder – tiefer Kontakt mit dir selbst",
-      "Durchgehende Begleitung im Malprozess",
-      "Themenaufdeckend, Stärkung deiner Ressourcen"
-    ]
-  }
-};
-
-const lomOffering = {
-  einzeltermin: {
-    subtitle: "Erwachsene & Jugendliche",
-    icon: Clock,
-    details: [
-      { label: "Voraussetzung", value: "keine" },
-      { label: "Dauer", value: "ca. 75 Minuten" },
-      { label: "Termine", value: "nach Absprache" },
-    ],
-    pricing: [
-      { label: "Einzeltermin", value: "79 €" }
-    ],
-    note: "Kinder & Jugendliche zahlen 69€",
-    qualities: [
-      "Großformatiges Malen mit Lascaux Gouache",
-      "Strukturierte Vorgehensweise mit bewährtem Protokoll",
-      "Arbeit mit Bildkorrekturen und Metaphern",
-      "Entlastung durch positive, klare innere Bilder",
-      "Lösungsorientiert wirksam bei Symptomen, Traumata und allen anderen Anliegen"
-    ]
-  },
-  gruppe: {
-    subtitle: "Erwachsene",
-    icon: Users,
-    details: [
-      { label: "Voraussetzung", value: "vorheriger Einzeltermin" },
-      { label: "Dauer", value: "ca. 120 Minuten" },
-      { label: "Termine", value: "nach Absprache" },
-      { label: "Gruppe", value: "2–5 Personen" },
-    ],
-    pricing: [
-      { label: "Pro Person", value: "49 €" }
-    ],
-    note: undefined,
-    qualities: [
-      "Großformatiges Malen mit Lascaux Gouache",
-      "Strukturierte Vorgehensweise mit bewährtem Protokoll",
-      "Arbeit mit Bildkorrekturen und Metaphern",
-      "Entlastung durch positive, klare innere Bilder",
-      "Lösungsorientiert wirksam bei Symptomen, Traumata und allen anderen Anliegen"
-    ]
-  }
-};
-
-const bildASetOffering = {
-  einzeltermin: {
-    subtitle: "Kunsttherapeutische Selbsterfahrung",
-    icon: Layers,
-    details: [
-      { label: "Voraussetzung", value: "keine" },
-      { label: "Dauer", value: "ca. 60 Minuten" },
-      { label: "Termine", value: "nach Absprache" },
-    ],
-    pricing: [
-      { label: "Einzeltermin", value: "40–55 €" }
-    ],
-    note: "Flow-Tarif (Du entscheidest was du zahlen kannst)",
-    qualities: [
-      "Intuitives Arbeiten mit Bildkarten",
-      "Arbeit mit Übertragungsprozessen",
-      "Gemeinsame Bildinterpretation & Analyse",
-      "Entwicklung eigener Kartensets möglich",
-      "Niedrigschwellige Selbsterfahrung und Psychohygiene",
-      "Hilfreich für Menschen in helfenden Berufen",
-      "Kleinformatig mit unterschiedlichen Farben & Online möglich"
-    ]
-  },
-  gruppe: {
-    subtitle: "Kunsttherapeutische Selbsterfahrung",
-    icon: Users,
-    details: [
-      { label: "Voraussetzung", value: "vorheriger Einzeltermin" },
-      { label: "Dauer", value: "ca. 120 Minuten" },
-      { label: "Termine", value: "nach Absprache" },
-      { label: "Frauengruppe", value: "3–6 Personen" },
-    ],
-    pricing: [
-      { label: "Gruppe, p.P.", value: "30–55 €" }
-    ],
-    note: "Flow-Tarif (Du entscheidest was du zahlen kannst)",
-    qualities: [
-      "Intuitives Arbeiten mit Bildkarten",
-      "Arbeit mit Übertragungsprozessen",
-      "Gemeinsame Bildinterpretation & Analyse",
-      "Entwicklung eigener Kartensets möglich",
-      "Niedrigschwellige Selbsterfahrung und Psychohygiene",
-      "Hilfreich für Menschen in helfenden Berufen",
-      "Kleinformatig mit unterschiedlichen Farben & Online möglich"
-    ]
-  }
-};
-
-
-
-type OfferingData = typeof pmOffering;
 
 // Context for coordinating heights across cards
 const HeightSyncContext = createContext<{
@@ -179,7 +43,7 @@ function HeightSyncProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ToggleCard({ title, offering, cardId }: { title: string; offering: any; cardId: string }) {
+function ToggleCard({ title, offering, cardId, isRecommended }: { title: string; offering: any; cardId: string; isRecommended?: boolean }) {
   const [isGruppe, setIsGruppe] = useState(false);
   const currentOffering = isGruppe ? offering.gruppe : offering.einzeltermin;
   const IconComponent = currentOffering.icon;
@@ -240,7 +104,27 @@ function ToggleCard({ title, offering, cardId }: { title: string; offering: any;
     : undefined;
 
   return (
-    <div className="p-6 md:p-8 rounded-2xl bg-card border border-border flex flex-col h-full hover:shadow-xl transition-all duration-500 group">
+    <div className={cn(
+      "p-6 md:p-8 rounded-2xl bg-card flex flex-col h-full hover:shadow-xl transition-all duration-500 group relative",
+      isRecommended
+        ? "border-2 border-primary/40 ring-4 ring-primary/5 bg-primary/[0.01] shadow-lg scale-[1.02] z-10"
+        : "border border-border"
+    )}>
+      {isRecommended && (
+        <TooltipProvider delayDuration={300}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md flex items-center gap-1.5 whitespace-nowrap animate-in fade-in zoom-in duration-500 cursor-help">
+                <Sparkles className="w-3 h-3 fill-current" />
+                Deine Empfehlung
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="max-w-[240px] text-center p-3 leading-relaxed">
+              Basierend auf deinem Quiz-Ergebnis. Diese Empfehlung dient zur Orientierung und ersetzt kein persönliches Erstgespräch.
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       {/* Header with PM/LOM® title */}
       <div className="mb-4 min-h-[72px]">
         <div>
@@ -346,6 +230,20 @@ function ToggleCard({ title, offering, cardId }: { title: string; offering: any;
 
 
 export default function AngebotPreise({ currentPath }: { currentPath?: string }) {
+  const [recommendedMethod, setRecommendedMethod] = useState<string | null>(null);
+
+  useEffect(() => {
+    const savedResult = localStorage.getItem("kunsttherapie-quiz-result");
+    if (savedResult) {
+      try {
+        const { winningMethod } = JSON.parse(savedResult);
+        setRecommendedMethod(winningMethod);
+      } catch (e) {
+        console.error("Failed to parse saved quiz result", e);
+      }
+    }
+  }, []);
+
   return (
     <Layout currentPath={currentPath}>
       {/* Hero */}
@@ -365,9 +263,24 @@ export default function AngebotPreise({ currentPath }: { currentPath?: string })
         <div className="container">
           <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <HeightSyncProvider>
-              <ToggleCard title="Personenorientiertes Malen (PM)" offering={pmOffering} cardId="pm" />
-              <ToggleCard title="Lösungsorientiertes Malen (LOM®)" offering={lomOffering} cardId="lom" />
-              <ToggleCard title="bildASet Methode" offering={bildASetOffering} cardId="bildASet" />
+              <ToggleCard
+                title="Personenorientiertes Malen (PM)"
+                offering={pmOffering}
+                cardId="pm"
+                isRecommended={recommendedMethod?.toLowerCase() === "pm"}
+              />
+              <ToggleCard
+                title="Lösungsorientiertes Malen (LOM®)"
+                offering={lomOffering}
+                cardId="lom"
+                isRecommended={recommendedMethod?.toLowerCase() === "lom"}
+              />
+              <ToggleCard
+                title="bildASet Methode"
+                offering={bildASetOffering}
+                cardId="bildASet"
+                isRecommended={recommendedMethod?.toLowerCase() === "bildaset"}
+              />
             </HeightSyncProvider>
           </div>
         </div>
