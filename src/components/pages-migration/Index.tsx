@@ -10,8 +10,9 @@ const helpTopics = [
         icon: Heart,
         label: "Symptome",
         description:
-            "Emotionen und Gefühle zeigen sich oft als körperliche oder verhaltensbestimmende Symptome – z.B. Flugangst, die sich mit Panik und Angstzuständen bemerkbar macht.",
+            "Emotionen und Gefühle zeigen sich oft als körperliche und verhaltensbestimmende Symptome – z.B. Flugangst, die sich mit Panik und Angstzuständen sichtbar bemerkbar macht.",
         link: "/kontakt",
+        bgImage: "/assets/symptome.webp",
     },
     {
         icon: Sparkles,
@@ -19,6 +20,7 @@ const helpTopics = [
         description:
             "Wir alle tragen bewusste oder unbewusste Wünsche in uns. Was hält uns davon ab, dass diese in Erfüllung gehen? Welche Erfahrungen stehen uns im Weg?",
         link: "/kontakt",
+        bgImage: "/assets/wuensche.webp",
     },
     {
         icon: Users,
@@ -26,13 +28,15 @@ const helpTopics = [
         description:
             "Wieso gibt es Baustellen in unseren Beziehungen? Welche Muster tauchen immer wieder auf? Wenn wir uns dessen gewahr werden, können Veränderungen stattfinden.",
         link: "/kontakt",
+        bgImage: "/assets/beziehungen.webp",
     },
     {
         icon: HeartCrack,
         label: "Trauer & Abschied",
         description:
-            "Das Leben ist voller Abschiede – von geliebten Menschen, Trennungen oder von Träumen und Zielen. Wir dürfen lernen, achtsam mit uns umzugehen und den Trauerprozess in der Maltherapie mit Bildern begleiten",
+            "Das Leben ist voller Abschiede – von geliebten Menschen, Trennungen oder von Träumen und Zielen. Wir dürfen lernen, achtsam mit uns umzugehen.",
         link: "/trauer-abschied",
+        bgImage: "/assets/trauer-abschied.webp",
     },
     {
         icon: Brain,
@@ -40,13 +44,15 @@ const helpTopics = [
         description:
             "Was wollen wir wirklich? In der Maltherapie können auch unbewusste Motivationen und Wünsche ins Sichtbare kommen. Wir werden gestärkt, uns selbst zu vertrauen.",
         link: "/kontakt",
+        bgImage: "/assets/entscheidungen.webp",
     },
     {
         icon: Zap,
         label: "Traumata",
         description:
-            "Traumata können Ereignisse sein, die tiefgreifende Ausmaße haben – ob ein Erlebnis traumatisch ist, ist ganz individuell. Im Malen finden wir einen sicheren Zugang. Maltherapie wirkt stabilisierend - schlimmer Ereignisse werden integriert und können so ihren Schrecken verlieren.",
+            "Traumata können Ereignisse sein, die tiefgreifende Ausmaße haben. Im Malen finden wir einen sicheren Zugang. Maltherapie wirkt hier stabilisierend.",
         link: "/kontakt",
+        bgImage: "/assets/traumata.webp",
     },
 ];
 
@@ -171,15 +177,32 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                             Wobei kann Malen hilfreich sein?
                         </h2>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {helpTopics.map((topic) => (
                             <div
                                 key={topic.label}
-                                className="group flex flex-col items-center gap-3 p-6 rounded-lg bg-background border border-transparent hover:border-primary/30 hover:shadow-md transition-all duration-300 text-center"
+                                className="group relative overflow-hidden p-6 rounded-2xl bg-background border border-border/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col min-h-[220px]"
                             >
-                                <topic.icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
-                                <span className="text-sm font-medium text-foreground">{topic.label}</span>
-                                <p className="text-xs text-muted-foreground leading-relaxed">{topic.description}</p>
+                                {/* Background Sketch Image */}
+                                <div className="absolute inset-0 pointer-events-none opacity-30 bg-background">
+                                    <img
+                                        src={topic.bgImage}
+                                        alt=""
+                                        className="absolute right-[-5%] bottom-[-5%] w-2/3 h-full object-contain object-right-bottom scale-105 mix-blend-multiply"
+                                    />
+                                </div>
+
+                                <div className="relative z-10 space-y-3 max-w-[75%]">
+                                    <div className="inline-flex p-2 rounded-xl bg-primary/5 text-primary group-hover:scale-105 transition-transform duration-300">
+                                        <topic.icon className="h-7 w-7" strokeWidth={1.5} />
+                                    </div>
+                                    <h3 className="text-lg font-medium text-foreground tracking-tight">
+                                        {topic.label}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                        {topic.description}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -356,6 +379,6 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                     </div>
                 </div>
             </section>
-        </Layout>
+        </Layout >
     );
 }
