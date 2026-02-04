@@ -1,65 +1,122 @@
-import { ArrowRight, HelpCircle, Brain, Sparkles, Target, Lightbulb, Layers } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { ArrowRight, HelpCircle, Brain, Sparkles, Target, Lightbulb, Layers, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 const handsImage = "/assets/MikelaBlanck_SoArbeiteIch-DY8h2Pt5.webp";
 const malraumImage = "/assets/malraum-mit-lascaux-gouache-farben.webp";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { urlFor } from "@/lib/sanity";
+
+interface BlogPost {
+  title: string;
+  subheading?: string | any[];
+  slug: string;
+  mainImage: any;
+  publishedAt: string;
+  categories?: string[];
+}
+
+const toPlainText = (blocks: any[] = []) => {
+  if (!blocks || !Array.isArray(blocks)) return '';
+  return blocks
+    .map(block => {
+      if (block._type !== 'block' || !block.children) {
+        return '';
+      }
+      return block.children.map((child: any) => child.text).join('');
+    })
+    .join('\n\n');
+};
 
 const methods = [
   {
     title: "Personenorientiertes Malen (PM)",
     icon: Brain,
-    subtitle: "Entdecken, was in dir liegt",
+    subtitle: "Im Malprozess Gedanken und Gefühle klären",
     description:
-      "PM wurde von Bettina Egger und Jörg Merz entwickelt und basiert auf der Erkenntnis, dass Malen ein Spiegel unserer inneren Welt ist. Es geht nicht um künstlerisches Gestalten, sondern um einen begleiteten Prozess der Selbsterfahrung.",
+      "POM wurde von der Schweizerin Dr. Phil. Bettina Egger entwickelt. Der Schwerpunkt liegt auf dem Dialog zwischen der malenden Person und dem Bild. Von Geburt an tragen wir einzigartige Eigenschaften in uns. Durch Erfahrungen und Prägungen im Laufe unseres Lebens kann der Zugang zu diesem inneren Kern jedoch verblassen. Das Begleitete Malen macht sichtbar, welche inneren Hindernisse dieser Verbindung im Weg stehen – vor allem Ängste und Glaubenssätze, die unsere Offenheit, Lebensfreude und Handlungsfähigkeit einschränken.",
     philosophy:
-      "Beim PM entsteht das Bild aus dem Moment heraus – ohne Vorgabe, ohne Thema. Du malst, was gemalt werden will. Ich begleite dich währenddessen aufmerksam und wertfrei, stelle Fragen, biete Impulse an. So können verborgene Ressourcen, Qualitäten und auch Blockaden sichtbar werden.",
+      "Beim PM entsteht das Bild aus dem Moment heraus – ohne Vorgabe, ohne Thema. Du malst, was gemalt werden will. Ich begleite und unterstütze dich währenddessen aufmerksam und wertfrei, stelle Fragen, biete Interventionen an.",
     details: [
       "Kein Leistungsdruck – es geht nie um schöne oder 'richtige' Bilder",
-      "Du malst intuitiv, ohne vorher nachzudenken",
-      "Ich begleite dich durchgehend im Malprozess",
+      "Ureigene Bilder ermöglichen den tiefen Kontakt mit dir selber",
+      "Ich begleite dich durchgehend im Malprozess - Du bist nicht alleine",
       "Das Bild wird nicht interpretiert oder bewertet",
-      "Deine Qualitäten und Ressourcen werden sichtbar gestärkt",
+      "Deine ursprünglichen Qualitäten und Ressourcen werden gestärkt",
     ],
     suitable:
-      "Für alle, die sich selbst besser kennenlernen möchten, ihre Kreativität entdecken oder einen Zugang zu ihren Gefühlen suchen.",
+      "Für alle, die sich selbst besser kennenlernen möchten. Die sich langsam an die Maltherapie herantasten möchten. Die hochwertige Farben haptisch und sinnlich genießen möchten. Niedrigschwellig und doch tief gehend. Kreativitätsfördernd.",
+    blog: {
+      title: "Der Dialog mit dem Bild",
+      category: "Methoden",
+      slug: "personenorientierte-maltherapie",
+      image: handsImage,
+      date: "2024-01-15",
+      excerpt: "Wie die malerische Selbsterfahrung hilft, innere Blockaden zu lösen."
+    }
   },
   {
     title: "Lösungsorientiertes Malen (LOM®)",
     icon: Target,
     subtitle: "Eindruck statt Ausdruck",
     description:
-      "LOM® wurde von Bettina Egger entwickelt und ist eine eigenständige Methode, die gezielt mit inneren Bildern arbeitet. Im Gegensatz zu ausdrucksorientiertem Malen geht es hier darum, neue, hilfreiche Bilder zu malen – und damit die belastenden inneren Bilder zu verändern.",
+      "LOM® wurde von den Schweizern Jörg Merz und Dr. Phil Bettina Egger entwickelt und ist eine eigenständige Methode, die gezielt mit inneren Bildern arbeitet. Im Gegensatz zu ausdrucksorientiertem Malen geht es hier darum, neue, hilfreiche Bilder zu malen – und damit die belastenden inneren Bilder zu verändern. LOM® wirkt primär auf neuronaler Ebene und unterstützt nachhaltige Veränderungen, die zu einer spürbaren Verbesserung der Lebensqualität beitragen.",
+    descriptionExtended:
+      "Die maltherapeutische Arbeit basiert auf standardisierten Erhebungen; der Entwicklungsverlauf wird zu Beginn und am Ende auf einer Skala von 0 bis 10 eingeschätzt. Die Wirksamkeit von LOM® ist wissenschaftlich belegt. Die Maltherapeutin bzw. der Maltherapeut schlägt eine zum Anliegen passende, klar strukturierte Vorgehensweise vor und begleitet die Malenden während des gesamten Malprozesses achtsam.",
     philosophy:
-      "Das Prinzip: Unser Gehirn speichert Erfahrungen als innere Bilder. Belastende Erlebnisse hinterlassen oft 'störende' Bilder, die uns unbewusst beeinflussen. Im LOM® malen wir gezielt neue, klare, angenehme Bilder – sogenannte Realbilder – die das Gehirn als neue Referenz abspeichert. So kann Belastendes in den Hintergrund treten.",
+      "Das Prinzip: Unser Gehirn speichert Erfahrungen als innere Bilder. Belastende Erlebnisse hinterlassen oft 'störende' Bilder, die uns unbewusst beeinflussen. Im LOM® malen wir gezielt neue, klare, störungsfreie Bilder – sogenannte Realbilder – die das Gehirn als neue Referenz abgespeichert. Veränderungen der Emotionen werden möglich durch Veränderungen am Bild. Metaphern regulieren Emotionen.",
     details: [
-      "Keine Bildinterpretation oder Analyse nötig",
-      "Arbeit mit konkreten Realbildern und Metaphern",
+      "Keine Bildinterpretation oder Analyse",
+      "Klar strukturierte Vorgehensweise",
+      "Arbeit mit Bildkorrekturen und Metaphern",
       "Entlastung durch positive, klare innere Bilder",
       "Strukturierte Vorgehensweise mit bewährtem Protokoll",
-      "Nachweislich wirksam bei Traumata, Ängsten, Belastungen",
+      "Lösungsorientiert wirksam bei Symptomen, Traumata, Ängsten, Beziehungsproblemen etc.",
     ],
     suitable:
-      "Für Menschen mit konkreten Themen wie Ängsten, belastenden Erinnerungen, Traumata oder wiederkehrenden negativen Gedanken.",
+      "Für Menschen mit konkreten Themen, die unter Anleitung strukturiert und relativ geführt ihr Anliegen bearbeiten möchten. Die sich eine zeitnahe Entlastung wünschen.",
+    blog: {
+      title: "Worauf es beim LOM® ankommt",
+      category: "Therapie",
+      slug: "lom-maltherapie",
+      image: malraumImage,
+      date: "2024-02-01",
+      excerpt: "Wieso Realbilder so wirkungsvoll auf unser Gehirn wirken."
+    }
   },
   {
     title: "bildASet Methode",
     icon: Layers,
-    subtitle: "Psychoanalytische Selbsterfahrung",
+    subtitle: "Übertragungsgeschehen in der kunsttherapeutischen Selbsterfahrung",
     description:
-      "bildASet ist eine psychoanalytisch fundierte Methode der Selbsterfahrung und Selbstreflexion der eigenen Lebensgeschichte. Durch Übertragungsprozesse im Malen können unbewusste Dynamiken sichtbar und bearbeitbar werden.",
+      "Die BildASet Methode wurde von Antoaneta Slavova entwickelt. Im Mittelpunkt steht nicht das Gespräch als vermittelnde Instanz zwischen zwei Menschen, sondern die unbewusste Resonanz zwischen den entstandenen Bildern. Diese eröffnet einen neuen, bildhaften Kommunikationsraum. Durch den Austausch von Bildern können unbewusste Emotionen und innere Ressourcen sichtbar werden und in Bewegung kommen.",
+    descriptionExtended:
+      "Gleichzeitig lädt die Methode dazu ein, Prozesse zu verlangsamen und bewusst Raum für Reflexion zu schaffen. Auf diese Weise werden innere Widerstände behutsam wahrnehmbar und können achtsam angesprochen und integriert werden.",
     philosophy:
-      "Im bildASet-Prozess werden durch das Malen unbewusste Beziehungsmuster und Lebensthemen an die Oberfläche geholt. Die Übertragung auf das Bild ermöglicht es, die eigene Geschichte aus neuer Perspektive zu betrachten und zu integrieren. So können frühe Prägungen erkannt und verarbeitet werden.",
+      "Die bildASet-Methode macht die visuellen Entsprechungen innerer Themen auf unmittelbare Weise zugänglich, sodass sie erkannt und in einen Wandlungsprozess geführt werden können.",
     details: [
-      "Psychoanalytisch fundierte Herangehensweise",
+      "Intuitives Arbeiten mit Bildkarten der Kunsttherapeutin",
       "Arbeit mit Übertragungsprozessen im Malprozess",
-      "Selbstreflexion der eigenen Lebensgeschichte",
-      "Unbewusste Beziehungsmuster werden sichtbar",
-      "Integration von frühen Prägungen und Erfahrungen",
+      "Gemeinsame Bildinterpretation und Analyse",
+      "Niedrigschwellige Methode geeignet auch zur Psychohygiene in helfenden Berufen",
+      "Eigene Kartensets können entwickelt werden",
+      "Kleinformatiges Malen am Tisch",
+      "Online-Sitzungen möglich",
     ],
     suitable:
-      "Für Menschen, die ihre eigene Lebensgeschichte verstehen und aufarbeiten möchten, sowie für tiefenpsychologisch orientierte Selbsterfahrung.",
+      "Für Menschen, die kreativ and aktiv in die eigene intensive Selbsterfahrung - vorrangig in der Gruppe - einsteigen möchten. Die auf das Übertragungsgeschehen und Themen der Gruppe neugierig sind.",
+    blog: {
+      isPlaceholder: true,
+      title: "Die BildASet Methode",
+      category: "Selbsterfahrung",
+      slug: "#",
+      image: "/assets/bildaset-methode-karten.webp",
+      date: "Bald verfügbar",
+      excerpt: "In diesem kommenden Artikel erfährst du alles über die unbewusste Resonanz zwischen Bildern."
+    }
   },
 ];
 
@@ -129,7 +186,197 @@ const faqs = [
   },
 ];
 
-export default function MethodeAblauf({ currentPath }: { currentPath?: string }) {
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+};
+
+function BlogCard({ blog, isMobile }: { blog: any, isMobile?: boolean }) {
+  if (!blog) return null;
+  const isPlaceholder = blog.isPlaceholder;
+
+  // Use Sanity data if available, otherwise fallback to static placeholder data
+  const title = blog.title;
+  const slug = isPlaceholder ? "#" : blog.slug;
+  const image = isPlaceholder ? blog.image : urlFor(blog.mainImage).width(600).height(375).url();
+  const date = isPlaceholder ? blog.date : formatDate(blog.publishedAt);
+  const category = isPlaceholder ? blog.category : (blog.categories && blog.categories.length > 0 ? blog.categories[0] : 'Artikel');
+  const excerpt = isPlaceholder ? blog.excerpt : (blog.subheading ? (typeof blog.subheading === 'string' ? blog.subheading : toPlainText(blog.subheading as any)) : '');
+
+  const content = (
+    <div
+      className={cn(
+        "group flex flex-col h-full bg-card rounded-2xl overflow-hidden shadow-sm transition-all duration-500 border border-border/50",
+        !isPlaceholder && "hover:shadow-xl hover:-translate-y-1",
+        isMobile ? "max-w-sm mx-auto w-full" : "h-fit w-full",
+        isPlaceholder && "opacity-80"
+      )}
+    >
+      <div className="aspect-[16/10] overflow-hidden relative">
+        <img
+          src={image}
+          alt={title}
+          className={cn(
+            "w-full h-full object-cover transition-transform duration-700",
+            !isPlaceholder && "group-hover:scale-105"
+          )}
+        />
+        {!isPlaceholder && (
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+        )}
+      </div>
+      <div className="p-6 flex flex-col flex-1">
+        <div className="flex items-center gap-2 mb-4">
+          <span
+            className="text-[10px] font-medium text-muted-foreground"
+          >
+            {date}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-border" />
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+            {category}
+          </span>
+        </div>
+
+        <h4 className="text-lg font-light tracking-tight mb-3 text-foreground group-hover:text-primary transition-colors duration-300 leading-tight line-clamp-2">
+          {title}
+        </h4>
+
+        {excerpt && (
+          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-6">
+            {excerpt}
+          </p>
+        )}
+
+        <div className="mt-auto flex items-center text-foreground font-medium group/link text-xs">
+          <span className="border-b border-foreground/10 group-hover/link:border-primary transition-colors duration-300">
+            {isPlaceholder ? "Artikel in Arbeit" : "Weiterlesen"}
+          </span>
+          {!isPlaceholder && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-3.5 w-3.5 ml-2 transition-transform duration-300 group-hover/link:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  if (isPlaceholder) return content;
+
+  return (
+    <a href={`/blog/${slug}`} className="block h-full">
+      {content}
+    </a>
+  );
+}
+
+function MethodCard({ method }: { method: any }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div
+      className="p-8 rounded-lg bg-card border border-border transition-all duration-300 hover:shadow-lg hover:border-primary/30"
+    >
+      <div className="grid md:grid-cols-[260px_1fr] gap-12 items-start">
+        {/* Blog Column (Left) */}
+        <div className="hidden md:block">
+          <BlogCard blog={method.blog} />
+        </div>
+
+        {/* Text Column (Right) */}
+        <div>
+          <div className="flex items-start gap-4 mb-4">
+            <div className="p-3 rounded-full bg-primary/10">
+              <method.icon className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-light text-foreground">{method.title}</h3>
+              <p className="text-primary font-medium">{method.subtitle}</p>
+            </div>
+          </div>
+
+          <p className="text-muted-foreground mb-4">{method.description}</p>
+
+          {/* Mobile Blog Card */}
+          <div className="md:hidden mt-6 mb-8 bg-background/50 p-6 rounded-xl border border-border/50">
+            <BlogCard blog={method.blog} isMobile />
+          </div>
+
+          {isOpen && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+              {method.descriptionExtended && (
+                <p className="text-muted-foreground mb-4">{method.descriptionExtended}</p>
+              )}
+
+              <div className="bg-background p-4 rounded-lg border border-border mb-4">
+                <p className="text-sm text-muted-foreground italic">{method.philosophy}</p>
+              </div>
+
+              <h4 className="font-light text-foreground mb-3">Was das bedeutet:</h4>
+              <ul className="space-y-2 mb-4">
+                {method.details.map((detail: string) => (
+                  <li key={detail} className="flex items-start gap-2 text-sm">
+                    <span className="text-primary shrink-0">•</span>
+                    <span className="text-muted-foreground">{detail}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+                <p className="text-sm">
+                  <strong className="text-foreground">Geeignet für:</strong>{" "}
+                  <span className="text-muted-foreground">{method.suitable}</span>
+                </p>
+              </div>
+            </div>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsOpen(!isOpen)}
+            className="mt-4 h-auto p-0 hover:bg-transparent text-primary hover:text-primary/80 font-medium flex items-center gap-1 group"
+          >
+            {isOpen ? (
+              <>
+                Weniger anzeigen
+                <ChevronUp className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
+              </>
+            ) : (
+              <>
+                Details anzeigen
+                <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+              </>
+            )}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function MethodeAblauf({ currentPath, pmBlogPost, lomBlogPost }: { currentPath?: string, pmBlogPost?: any, lomBlogPost?: any }) {
+  // Merge real blog data into methods array
+  const methodsWithBlogs = methods.map(method => {
+    if (method.title.includes("Personenorientiertes")) {
+      return { ...method, blog: pmBlogPost || method.blog };
+    }
+    if (method.title.includes("Lösungsorientiertes")) {
+      return { ...method, blog: lomBlogPost || method.blog };
+    }
+    return method;
+  });
+
   return (
     <Layout currentPath={currentPath}>
       {/* Hero */}
@@ -246,44 +493,8 @@ export default function MethodeAblauf({ currentPath }: { currentPath?: string })
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             </p>
             <div className="space-y-12">
-              {methods.map((method) => (
-                <div
-                  key={method.title}
-                  className="p-8 rounded-lg bg-card border border-border transition-all duration-300 hover:shadow-lg hover:border-primary/30"
-                >
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="p-3 rounded-full bg-primary/10">
-                      <method.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-light text-foreground">{method.title}</h3>
-                      <p className="text-primary font-medium">{method.subtitle}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-muted-foreground mb-4">{method.description}</p>
-
-                  <div className="bg-background p-4 rounded-lg border border-border mb-4">
-                    <p className="text-sm text-muted-foreground italic">{method.philosophy}</p>
-                  </div>
-
-                  <h4 className="font-light text-foreground mb-3">Was das bedeutet:</h4>
-                  <ul className="space-y-2 mb-4">
-                    {method.details.map((detail) => (
-                      <li key={detail} className="flex items-start gap-2 text-sm">
-                        <span className="text-primary shrink-0">•</span>
-                        <span className="text-muted-foreground">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-                    <p className="text-sm">
-                      <strong className="text-foreground">Geeignet für:</strong>{" "}
-                      <span className="text-muted-foreground">{method.suitable}</span>
-                    </p>
-                  </div>
-                </div>
+              {methodsWithBlogs.map((method) => (
+                <MethodCard key={method.title} method={method} />
               ))}
             </div>
           </div>

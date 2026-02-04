@@ -1,8 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import MethodeAblaufPage from '../components/pages-migration/MethodeAblauf.tsx';
+import { client } from '../lib/sanity';
+
+// Fetch the PM and LOM blog posts for display
+const pmBlogPost = await client.fetch(`*[_type == "post" && slug.current == "personenorientierte-maltherapie"][0] {
+  title,
+  subheading,
+  "slug": slug.current,
+  mainImage,
+  publishedAt,
+  "categories": categories[]->title
+}`);
+
+const lomBlogPost = await client.fetch(`*[_type == "post" && slug.current == "lom-maltherapie"][0] {
+  title,
+  subheading,
+  "slug": slug.current,
+  mainImage,
+  publishedAt,
+  "categories": categories[]->title
+}`);
 ---
 
 <Layout title="So arbeite ich | Mikela Blanck Kunsttherapie">
-	<MethodeAblaufPage client:load currentPath={Astro.url.pathname} />
+	<MethodeAblaufPage client:load currentPath={Astro.url.pathname} pmBlogPost={pmBlogPost} lomBlogPost={lomBlogPost} />
 </Layout>
