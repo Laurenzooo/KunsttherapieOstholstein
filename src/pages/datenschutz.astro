@@ -3,6 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import DatenschutzPage from '../components/pages-migration/Datenschutz.tsx';
 ---
 
-<Layout title="Datenschutzerklärung | Mikela Blanck Kunsttherapie">
+<Layout title="Datenschutzerklärung | Mikela Blanck Kunsttherapie" robots="noindex, follow">
 	<DatenschutzPage client:load currentPath={Astro.url.pathname} />
 </Layout>

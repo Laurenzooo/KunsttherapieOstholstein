@@ -12,6 +12,9 @@
     "vite:dev": "vite",
     "vite:build": "vite build"
   },
+  "overrides": {
+    "caniuse-lite": "^1.0.30001767"
+  },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.0",
@@ -47,8 +50,10 @@
     "@sanity/client": "^7.14.0",
     "@sanity/image-url": "^2.0.2",
     "@tanstack/react-query": "^5.83.0",
-    "astro": "^5.16.6",
+    "astro": "^5.17.1",
     "astro-portabletext": "^0.13.0",
+    "baseline-browser-mapping": "^2.9.19",
+    "caniuse-lite": "^1.0.30001767",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

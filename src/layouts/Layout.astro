@@ -7,13 +7,15 @@ interface Props {
 	description?: string;
 	image?: string;
 	type?: string;
+	robots?: string;
 }
 
 const { 
 	title = "Mikela Blanck Kunsttherapie | Maltherapie in Eutin, Ostholstein",
 	description = "Kunsttherapie und Maltherapie in Eutin. Personenorientiertes Malen (PM) und Lösungsorientiertes Malen (LOM®). Begleitung bei Trauer, Abschied und persönlichen Themen.",
 	image = "/hero-image.webp",
-	type = "website"
+	type = "website",
+	robots
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -58,6 +60,7 @@ const schema = {
 		
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		{robots && <meta name="robots" content={robots} />}
 		<meta name="author" content="Mikela Blanck" />
 
 		<link rel="canonical" href={canonicalURL} />

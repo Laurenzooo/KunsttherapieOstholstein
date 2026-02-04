@@ -201,7 +201,7 @@ function BlogCard({ blog, isMobile }: { blog: any, isMobile?: boolean }) {
   // Use Sanity data if available, otherwise fallback to static placeholder data
   const title = blog.title;
   const slug = isPlaceholder ? "#" : blog.slug;
-  const image = isPlaceholder ? blog.image : urlFor(blog.mainImage).width(600).height(375).url();
+  const image = (isPlaceholder || !blog.mainImage) ? blog.image : urlFor(blog.mainImage).width(600).height(375).url();
   const date = isPlaceholder ? blog.date : formatDate(blog.publishedAt);
   const category = isPlaceholder ? blog.category : (blog.categories && blog.categories.length > 0 ? blog.categories[0] : 'Artikel');
   const excerpt = isPlaceholder ? blog.excerpt : (blog.subheading ? (typeof blog.subheading === 'string' ? blog.subheading : toPlainText(blog.subheading as any)) : '');

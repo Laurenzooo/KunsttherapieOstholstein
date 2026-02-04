@@ -3,6 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import ImpressumPage from '../components/pages-migration/Impressum.tsx';
 ---
 
-<Layout title="Impressum | Mikela Blanck Kunsttherapie">
+<Layout title="Impressum | Mikela Blanck Kunsttherapie" robots="noindex, follow">
 	<ImpressumPage client:load currentPath={Astro.url.pathname} />
 </Layout>
