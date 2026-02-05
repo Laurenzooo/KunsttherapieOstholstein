@@ -12,9 +12,9 @@ export default defineConfig({
     site: 'https://kunsttherapie-ostholstein.de',
     integrations: [react(), tailwind(), sitemap()],
     output: 'static',
-    // Inline small stylesheets to reduce render-blocking
+    // Inline all stylesheets to eliminate render-blocking resources in PageSpeed Insights
     build: {
-        inlineStylesheets: 'auto',
+        inlineStylesheets: 'always',
     },
     vite: {
         resolve: {
