@@ -84,20 +84,58 @@ const testimonials = [
     },
 ];
 
-export default function Index({ currentPath }: { currentPath?: string }) {
+export default function Index({
+    currentPath,
+    heroImage,
+    symptomeImg,
+    wuenscheImg,
+    beziehungenImg,
+    trauerImg,
+    entscheidungenImg,
+    traumataImg
+}: {
+    currentPath?: string;
+    heroImage?: any;
+    symptomeImg?: any;
+    wuenscheImg?: any;
+    beziehungenImg?: any;
+    trauerImg?: any;
+    entscheidungenImg?: any;
+    traumataImg?: any;
+}) {
+    const topicImages = {
+        "Symptome": symptomeImg,
+        "Wünsche": wuenscheImg,
+        "Beziehungen": beziehungenImg,
+        "Trauer & Abschied": trauerImg,
+        "Entscheidungen": entscheidungenImg,
+        "Traumata": traumataImg
+    };
+
     return (
         <Layout currentPath={currentPath}>
             {/* Hero Section */}
-            <section className="relative py-24 md:py-32 lg:py-40 overflow-hidden">
+            <section className="relative min-h-[calc(100dvh-5rem)] flex items-center py-24 md:py-32 lg:py-40 overflow-hidden">
                 {/* Sharp background image layer */}
                 <div
                     className="absolute inset-0 hero-bg-sharp"
                     style={{
-                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundImage: heroImage ? `url('${heroImage.src}')` : "url('/assets/hero_background.webp')",
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                     }}
                 />
+                {heroImage?.srcSet && (
+                    <style>{`
+                        @media (min-width: 768px) {
+                            .hero-bg-sharp {
+                                background-image: image-set(
+                                    ${heroImage.srcSet.split(', ').map((s: string) => `url('${s.split(' ')[0]}') ${s.split(' ')[1]}`).join(', ')}
+                                );
+                            }
+                        }
+                    `}</style>
+                )}
                 <style>{`
                     .hero-bg-sharp { background-position: right center; }
                     @media (min-width: 768px) {
@@ -108,7 +146,7 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                 <div
                     className="absolute inset-0 md:hidden"
                     style={{
-                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundImage: heroImage ? `url('${heroImage.src}')` : "url('/assets/hero_background.webp')",
                         backgroundSize: "cover",
                         backgroundPosition: "right center",
                         backgroundRepeat: "no-repeat",
@@ -184,9 +222,12 @@ export default function Index({ currentPath }: { currentPath?: string }) {
                                 {/* Background Sketch Image */}
                                 <div className="absolute inset-0 pointer-events-none opacity-30 bg-background">
                                     <img
-                                        src={topic.bgImage}
+                                        src={topicImages[topic.label as keyof typeof topicImages]?.src || topic.bgImage}
+                                        srcSet={topicImages[topic.label as keyof typeof topicImages]?.srcSet}
+                                        sizes="(max-width: 768px) 50vw, 300px"
                                         alt=""
                                         className="absolute right-[-5%] bottom-[-5%] w-2/3 h-full object-contain object-right-bottom scale-105 mix-blend-multiply"
+                                        loading="lazy"
                                     />
                                 </div>
 

@@ -21,8 +21,28 @@ const lomBlogPost = await client.fetch(`*[_type == "post" && slug.current == "lo
   publishedAt,
   "categories": categories[]->title
 }`);
+import { getImage } from "astro:assets";
+import handsImgAsset from "../assets/mikela-blanck-so-arbeite-ich.webp";
+import malraumImgAsset from "../assets/malraum-mit-lascaux-gouache-farben.webp";
+import bildasetImgAsset from "../assets/bildaset-methode-karten.webp";
+
+const handsImg = await getImage({ src: handsImgAsset, width: 800, format: 'webp' });
+const malraumImg = await getImage({ src: malraumImgAsset, width: 1000, format: 'webp' });
+const bildasetImg = await getImage({ src: bildasetImgAsset, width: 600, format: 'webp' });
+
+const handsOptimized = { src: handsImg.src, srcSet: handsImg.srcSet.attribute };
+const malraumOptimized = { src: malraumImg.src, srcSet: malraumImg.srcSet.attribute };
+const bildasetOptimized = { src: bildasetImg.src, srcSet: bildasetImg.srcSet.attribute };
 ---
 
 <Layout title="So arbeite ich | Mikela Blanck Kunsttherapie">
-	<MethodeAblaufPage client:load currentPath={Astro.url.pathname} pmBlogPost={pmBlogPost} lomBlogPost={lomBlogPost} />
+	<MethodeAblaufPage 
+		client:load 
+		currentPath={Astro.url.pathname} 
+		pmBlogPost={pmBlogPost} 
+		lomBlogPost={lomBlogPost} 
+		handsImg={handsOptimized}
+		malraumImg={malraumOptimized}
+		bildasetImg={bildasetOptimized}
+	/>
 </Layout>

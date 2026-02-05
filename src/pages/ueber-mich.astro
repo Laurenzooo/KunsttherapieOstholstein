@@ -1,8 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import UeberMichPage from '../components/pages-migration/UeberMich.tsx';
+import { getImage } from "astro:assets";
+
+import portraitImgAsset from "../assets/mikela-blanck-portrait.webp";
+import malraumImgAsset from "../assets/mikela-blanck-malraum.webp";
+
+const portraitImg = await getImage({ src: portraitImgAsset, width: 800, format: 'webp' });
+const malraumImg = await getImage({ src: malraumImgAsset, width: 1000, format: 'webp' });
+
+const portraitOptimized = { src: portraitImg.src, srcSet: portraitImg.srcSet.attribute };
+const malraumOptimized = { src: malraumImg.src, srcSet: malraumImg.srcSet.attribute };
 ---
 
 <Layout title="Über mich | Mikela Blanck Kunsttherapie" description="Lernen Sie Mikela Blanck kennen – diplomierte Kunsttherapeutin mit Herz und Erfahrung in Eutin, Ostholstein.">
-	<UeberMichPage client:load currentPath={Astro.url.pathname} />
+	<UeberMichPage 
+		client:load 
+		currentPath={Astro.url.pathname} 
+		portraitImg={portraitOptimized}
+		malraumImg={malraumOptimized}
+	/>
 </Layout>

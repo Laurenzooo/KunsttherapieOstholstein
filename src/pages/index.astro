@@ -1,11 +1,53 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import IndexPage from '../components/pages-migration/Index.tsx';
+import { getImage } from "astro:assets";
+
+// Import local assets
+import heroImgAsset from "../assets/hero_background.webp";
+import symptomeImgAsset from "../assets/symptome.webp";
+import wuenscheImgAsset from "../assets/wuensche.webp";
+import beziehungenImgAsset from "../assets/beziehungen.webp";
+import trauerImgAsset from "../assets/trauer-abschied.webp";
+import entscheidungenImgAsset from "../assets/entscheidungen.webp";
+import traumataImgAsset from "../assets/traumata.webp";
+
+// Optimize images
+const heroImage = await getImage({ src: heroImgAsset, width: 1920, format: 'webp' });
+const symptomeImg = await getImage({ src: symptomeImgAsset, width: 600, format: 'webp' });
+const wuenscheImg = await getImage({ src: wuenscheImgAsset, width: 600, format: 'webp' });
+const beziehungenImg = await getImage({ src: beziehungenImgAsset, width: 600, format: 'webp' });
+const trauerImg = await getImage({ src: trauerImgAsset, width: 600, format: 'webp' });
+const entscheidungenImg = await getImage({ src: entscheidungenImgAsset, width: 600, format: 'webp' });
+const traumataImg = await getImage({ src: traumataImgAsset, width: 600, format: 'webp' });
+
+// Get optimized image metadata for IndexPage
+const heroOptimized = {
+    src: heroImage.src,
+    srcSet: heroImage.srcSet.attribute
+};
+
+const symptomeOptimized = { src: symptomeImg.src, srcSet: symptomeImg.srcSet.attribute };
+const wuenscheOptimized = { src: wuenscheImg.src, srcSet: wuenscheImg.srcSet.attribute };
+const beziehungenOptimized = { src: beziehungenImg.src, srcSet: beziehungenImg.srcSet.attribute };
+const trauerOptimized = { src: trauerImg.src, srcSet: trauerImg.srcSet.attribute };
+const entscheidungenOptimized = { src: entscheidungenImg.src, srcSet: entscheidungenImg.srcSet.attribute };
+const traumataOptimized = { src: traumataImg.src, srcSet: traumataImg.srcSet.attribute };
 ---
 
 <Layout description="Kunsttherapie und Maltherapie in Eutin. Begleitung bei Trauer, Abschied und persönlichen Themen. Entdecken Sie die heilende Kraft des Malens.">
 	<!-- Preload LCP hero image for better performance -->
-	<link rel="preload" href="/assets/hero_background.webp" as="image" type="image/webp" fetchpriority="high" slot="head" />
-	<IndexPage client:idle currentPath={Astro.url.pathname} />
+	<link rel="preload" href={heroImage.src} as="image" type="image/webp" fetchpriority="high" slot="head" />
+	<IndexPage 
+		client:idle 
+		currentPath={Astro.url.pathname} 
+		heroImage={heroOptimized}
+		symptomeImg={symptomeOptimized}
+		wuenscheImg={wuenscheOptimized}
+		beziehungenImg={beziehungenOptimized}
+		trauerImg={trauerOptimized}
+		entscheidungenImg={entscheidungenOptimized}
+		traumataImg={traumataOptimized}
+	/>
 </Layout>
 

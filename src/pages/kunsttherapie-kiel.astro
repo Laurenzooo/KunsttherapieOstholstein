@@ -1,10 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import KielSEOPage from '../components/pages-migration/KielSEOPage.tsx';
+import { getImage } from "astro:assets";
+
+import heroImgAsset from "../assets/hero_background.webp";
+import portraitImgAsset from "../assets/mikela-blanck-portrait.webp";
+import atelierImgAsset from "../assets/mikela-blanck-malraum.webp";
+
+const heroImg = await getImage({ src: heroImgAsset, width: 1920, format: 'webp' });
+const portraitImg = await getImage({ src: portraitImgAsset, width: 800, format: 'webp' });
+const atelierImg = await getImage({ src: atelierImgAsset, width: 1000, format: 'webp' });
+
+const heroOptimized = { src: heroImg.src, srcSet: heroImg.srcSet.attribute };
+const portraitOptimized = { src: portraitImg.src, srcSet: portraitImg.srcSet.attribute };
+const atelierOptimized = { src: atelierImg.src, srcSet: atelierImg.srcSet.attribute };
 ---
 
 <Layout 
 	title="Kunsttherapie für Kiel & Umgebung | Mikela Blanck" 
 	description="Kunsttherapie in der Nähe von Kiel. Begleitung bei Trauer, Abschied und persönlichen Themen in Eutin. Entdecken Sie die heilende Kraft des Malens.">
-	<KielSEOPage client:load currentPath={Astro.url.pathname} />
+	<KielSEOPage 
+		client:load 
+		currentPath={Astro.url.pathname} 
+		heroImg={heroOptimized}
+		portraitImg={portraitOptimized}
+		atelierImg={atelierOptimized}
+	/>
 </Layout>

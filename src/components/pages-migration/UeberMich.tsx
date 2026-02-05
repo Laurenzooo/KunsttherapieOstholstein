@@ -49,7 +49,15 @@ const values = [
   },
 ];
 
-export default function UeberMich({ currentPath }: { currentPath?: string }) {
+export default function UeberMich({
+  currentPath,
+  portraitImg,
+  malraumImg
+}: {
+  currentPath?: string;
+  portraitImg?: any;
+  malraumImg?: any;
+}) {
   return (
     <Layout currentPath={currentPath}>
       {/* Hero / Introduction Section */}
@@ -59,7 +67,9 @@ export default function UeberMich({ currentPath }: { currentPath?: string }) {
             {/* Portrait */}
             <div className="aspect-[4/5] rounded-lg overflow-hidden order-1 md:order-2">
               <img
-                src={portraitImage}
+                src={portraitImg?.src || portraitImage}
+                srcSet={portraitImg?.srcSet}
+                sizes="(max-width: 768px) 100vw, 500px"
                 alt="Mikela Blanck - Kunsttherapeutin"
                 className="w-full h-full object-cover"
               />
@@ -107,9 +117,12 @@ export default function UeberMich({ currentPath }: { currentPath?: string }) {
             {/* Image */}
             <div className="aspect-[4/3] rounded-lg overflow-hidden">
               <img
-                src="/assets/mikela-blanck-malraum.webp"
+                src={malraumImg?.src || "/assets/mikela-blanck-malraum.webp"}
+                srcSet={malraumImg?.srcSet}
+                sizes="(max-width: 768px) 100vw, 600px"
                 alt="Der Malraum"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
 

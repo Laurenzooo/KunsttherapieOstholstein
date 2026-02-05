@@ -6,7 +6,17 @@ import { GDPRMap } from "@/components/ui/GDPRMap";
 const portraitImage = "/assets/mikela-blanck-portrait.webp";
 const atelierImage = "/assets/mikela-blanck-malraum.webp";
 
-export default function LuebeckSEOPage({ currentPath }: { currentPath?: string }) {
+export default function LuebeckSEOPage({
+    currentPath,
+    heroImg,
+    portraitImg,
+    atelierImg
+}: {
+    currentPath?: string;
+    heroImg?: any;
+    portraitImg?: any;
+    atelierImg?: any;
+}) {
     return (
         <Layout currentPath={currentPath}>
             {/* Hero Section */}
@@ -15,11 +25,22 @@ export default function LuebeckSEOPage({ currentPath }: { currentPath?: string }
                 <div
                     className="absolute inset-0 hero-bg-sharp"
                     style={{
-                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundImage: heroImg ? `url('${heroImg.src}')` : "url('/assets/hero_background.webp')",
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                     }}
                 />
+                {heroImg?.srcSet && (
+                    <style>{`
+                        @media (min-width: 768px) {
+                            .hero-bg-sharp {
+                                background-image: image-set(
+                                    ${heroImg.srcSet.split(', ').map((s: string) => `url('${s.split(' ')[0]}') ${s.split(' ')[1]}`).join(', ')}
+                                );
+                            }
+                        }
+                    `}</style>
+                )}
                 <style>{`
                     .hero-bg-sharp { background-position: right center; }
                     @media (min-width: 768px) {
@@ -30,7 +51,7 @@ export default function LuebeckSEOPage({ currentPath }: { currentPath?: string }
                 <div
                     className="absolute inset-0 md:hidden"
                     style={{
-                        backgroundImage: "url('/assets/hero_background.webp')",
+                        backgroundImage: heroImg ? `url('${heroImg.src}')` : "url('/assets/hero_background.webp')",
                         backgroundSize: "cover",
                         backgroundPosition: "right center",
                         backgroundRepeat: "no-repeat",

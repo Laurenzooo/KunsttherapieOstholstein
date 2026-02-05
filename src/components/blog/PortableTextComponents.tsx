@@ -1,4 +1,4 @@
-import { urlFor } from '../../lib/sanity';
+import { urlFor, getResponsiveSanityImage } from '../../lib/sanity';
 
 const slugify = (text: string) => {
     return text
@@ -21,9 +21,12 @@ export const ptComponents = {
     type: {
         image: ({ node }: any) => {
             if (!node?.asset?._ref) return null;
+            const responsiveImage = getResponsiveSanityImage(node, { widths: [320, 640, 800, 1200] });
             return (
                 <img
-                    src={urlFor(node).width(1200).url()}
+                    src={responsiveImage.src}
+                    srcSet={responsiveImage.srcSet}
+                    sizes="(max-width: 768px) 100vw, 800px"
                     alt={node.alt || 'Blog image'}
                     className="rounded-xl shadow-md my-8 w-full h-auto"
                     loading="lazy"

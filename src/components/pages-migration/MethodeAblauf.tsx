@@ -8,7 +8,7 @@ const handsImage = "/assets/mikela-blanck-so-arbeite-ich.webp";
 const malraumImage = "/assets/malraum-mit-lascaux-gouache-farben.webp";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
-import { urlFor } from "@/lib/sanity";
+import { urlFor, getResponsiveSanityImage } from "@/lib/sanity";
 
 interface BlogPost {
   title: string;
@@ -201,7 +201,8 @@ function BlogCard({ blog, isMobile }: { blog: any, isMobile?: boolean }) {
   // Use Sanity data if available, otherwise fallback to static placeholder data
   const title = blog.title;
   const slug = isPlaceholder ? "#" : blog.slug;
-  const image = (isPlaceholder || !blog.mainImage) ? blog.image : urlFor(blog.mainImage).width(600).height(375).url();
+  const responsiveImage = (!isPlaceholder && blog.mainImage) ? getResponsiveSanityImage(blog.mainImage, { width: 600, aspectRatio: 1.6 }) : null;
+  const image = (isPlaceholder || !blog.mainImage) ? blog.image : responsiveImage?.src;
   const date = isPlaceholder ? blog.date : formatDate(blog.publishedAt);
   const category = isPlaceholder ? blog.category : (blog.categories && blog.categories.length > 0 ? blog.categories[0] : 'Artikel');
   const excerpt = isPlaceholder ? blog.excerpt : (blog.subheading ? (typeof blog.subheading === 'string' ? blog.subheading : toPlainText(blog.subheading as any)) : '');
@@ -218,11 +219,14 @@ function BlogCard({ blog, isMobile }: { blog: any, isMobile?: boolean }) {
       <div className="aspect-[16/10] overflow-hidden relative">
         <img
           src={image}
+          srcSet={responsiveImage?.srcSet}
+          sizes="(max-width: 768px) 100vw, 400px"
           alt={title}
           className={cn(
             "w-full h-full object-cover transition-transform duration-700",
             !isPlaceholder && "group-hover:scale-105"
           )}
+          loading="lazy"
         />
         {!isPlaceholder && (
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
@@ -365,7 +369,21 @@ function MethodCard({ method }: { method: any }) {
   );
 }
 
-export default function MethodeAblauf({ currentPath, pmBlogPost, lomBlogPost }: { currentPath?: string, pmBlogPost?: any, lomBlogPost?: any }) {
+export default function MethodeAblauf({
+  currentPath,
+  pmBlogPost,
+  lomBlogPost,
+  handsImg,
+  malraumImg,
+  bildasetImg
+}: {
+  currentPath?: string,
+  pmBlogPost?: any,
+  lomBlogPost?: any,
+  handsImg?: any,
+  malraumImg?: any,
+  bildasetImg?: any
+}) {
   // Merge real blog data into methods array
   const methodsWithBlogs = methods.map(method => {
     if (method.title.includes("Personenorientiertes")) {
@@ -373,6 +391,9 @@ export default function MethodeAblauf({ currentPath, pmBlogPost, lomBlogPost }: 
     }
     if (method.title.includes("Lösungsorientiertes")) {
       return { ...method, blog: lomBlogPost || method.blog };
+    }
+    if (method.title.includes("BildASet")) {
+      return { ...method, blog: { ...method.blog, ...bildasetImg } };
     }
     return method;
   });
@@ -406,7 +427,9 @@ export default function MethodeAblauf({ currentPath, pmBlogPost, lomBlogPost }: 
               </div>
               <div className="aspect-[4/5] rounded-lg overflow-hidden">
                 <img
-                  src={handsImage}
+                  src={handsImg?.src || handsImage}
+                  srcSet={handsImg?.srcSet}
+                  sizes="(max-width: 768px) 100vw, 500px"
                   alt="Hände die sich begegnen als Symbol für Unterstützung"
                   className="w-full h-full object-cover"
                 />
@@ -465,9 +488,12 @@ export default function MethodeAblauf({ currentPath, pmBlogPost, lomBlogPost }: 
             <div className="grid md:grid-cols-[6fr_7fr] gap-8 items-center">
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <img
-                  src={malraumImage}
-                  alt="Der Malraum - ein geschützter Ort für therapeutisches Malen"
+                  src={malraumImg?.src || malraumImage}
+                  srcSet={malraumImg?.srcSet}
+                  sizes="(max-width: 768px) 100vw, 600px"
+                  alt="Der Malraum - ein geschützter ort für therapeutisches Malen"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div>
