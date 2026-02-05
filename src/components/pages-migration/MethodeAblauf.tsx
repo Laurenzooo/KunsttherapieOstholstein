@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ArrowRight, HelpCircle, Brain, Sparkles, Target, Lightbulb, Layers, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-const handsImage = "/assets/MikelaBlanck_SoArbeiteIch-DY8h2Pt5.webp";
+const handsImage = "/assets/mikela-blanck-so-arbeite-ich.webp";
 const malraumImage = "/assets/malraum-mit-lascaux-gouache-farben.webp";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";

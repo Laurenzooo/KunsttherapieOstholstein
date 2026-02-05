@@ -2,8 +2,6 @@ import { ArrowRight, Heart, Users, Compass, Brain, Zap, Sparkles, HeartCrack, Qu
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { GDPRMap } from "@/components/ui/GDPRMap";
-import heroImage from "@/assets/hero-therapy.jpg?url";
-import handsImage from "@/assets/hands-support.jpg?url";
 
 const helpTopics = [
     {

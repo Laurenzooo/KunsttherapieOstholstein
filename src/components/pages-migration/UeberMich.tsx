@@ -1,7 +1,7 @@
 import { ArrowRight, Shield, Sparkles, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-const portraitImage = "/assets/MikelaBlanck_About-Bk5OmPVp.webp";
+const portraitImage = "/assets/mikela-blanck-portrait.webp";
 
 const lifeStations = [
   "Abitur / kaufmännische Ausbildung",
@@ -107,7 +107,7 @@ export default function UeberMich({ currentPath }: { currentPath?: string }) {
             {/* Image */}
             <div className="aspect-[4/3] rounded-lg overflow-hidden">
               <img
-                src="/assets/MikelaBlanck_Malraum-mtSuT8Kt.webp"
+                src="/assets/mikela-blanck-malraum.webp"
                 alt="Der Malraum"
                 className="w-full h-full object-cover"
               />

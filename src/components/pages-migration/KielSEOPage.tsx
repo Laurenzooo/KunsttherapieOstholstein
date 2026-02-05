@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { GDPRMap } from "@/components/ui/GDPRMap";
 
-const portraitImage = "/assets/MikelaBlanck_About-Bk5OmPVp.webp";
-const atelierImage = "/assets/MikelaBlanck_Malraum-mtSuT8Kt.webp";
+const portraitImage = "/assets/mikela-blanck-portrait.webp";
+const atelierImage = "/assets/mikela-blanck-malraum.webp";
 
 export default function KielSEOPage({ currentPath }: { currentPath?: string }) {
     return (

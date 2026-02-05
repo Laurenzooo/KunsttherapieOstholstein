@@ -12,10 +12,28 @@ export default defineConfig({
     site: 'https://kunsttherapie-ostholstein.de',
     integrations: [react(), tailwind(), sitemap()],
     output: 'static',
+    // Inline small stylesheets to reduce render-blocking
+    build: {
+        inlineStylesheets: 'auto',
+    },
     vite: {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, './src'),
+            },
+        },
+        build: {
+            cssCodeSplit: true,
+            rollupOptions: {
+                output: {
+                    // Ensure CSS is properly code-split per page
+                    manualChunks: (id) => {
+                        // Keep page-specific CSS separate
+                        if (id.includes('node_modules')) {
+                            return 'vendor';
+                        }
+                    },
+                },
             },
         },
     },

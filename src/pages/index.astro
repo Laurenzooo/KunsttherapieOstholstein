@@ -4,6 +4,8 @@ import IndexPage from '../components/pages-migration/Index.tsx';
 ---
 
 <Layout description="Kunsttherapie und Maltherapie in Eutin. Begleitung bei Trauer, Abschied und persönlichen Themen. Entdecken Sie die heilende Kraft des Malens.">
-	<IndexPage client:load currentPath={Astro.url.pathname} />
+	<!-- Preload LCP hero image for better performance -->
+	<link rel="preload" href="/assets/hero_background.webp" as="image" type="image/webp" fetchpriority="high" slot="head" />
+	<IndexPage client:idle currentPath={Astro.url.pathname} />
 </Layout>
 

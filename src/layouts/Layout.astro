@@ -84,6 +84,9 @@ const schema = {
 
 		<!-- Local Business Schema -->
 		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+		
+		<!-- Page-specific head elements (preloads, etc.) -->
+		<slot name="head" />
 	</head>
 	<body>
 		<slot />
