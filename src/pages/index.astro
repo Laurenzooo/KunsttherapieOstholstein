@@ -13,16 +13,17 @@ import entscheidungenImgAsset from "../assets/entscheidungen.webp";
 import traumataImgAsset from "../assets/traumata.webp";
 
 // Generate responsive hero images for LCP optimization
-// Mobile: tiny (300px) since it's displayed blurred anyway
+// Mobile: TINY (200px, quality 40) - heavily compressed since it's displayed blurred anyway
 // Tablet: medium (800px)
 // Desktop: full resolution (1920px)
-const heroMobile = await getImage({ src: heroImgAsset, width: 300, quality: 60, format: 'webp' });
+const heroMobile = await getImage({ src: heroImgAsset, width: 200, quality: 40, format: 'webp' });
 const heroTablet = await getImage({ src: heroImgAsset, width: 800, quality: 75, format: 'webp' });
 const heroDesktop = await getImage({ src: heroImgAsset, width: 1920, quality: 80, format: 'webp' });
 
 // Build srcset and sizes for responsive loading
-const heroSrcset = `${heroMobile.src} 300w, ${heroTablet.src} 800w, ${heroDesktop.src} 1920w`;
-const heroSizes = "100vw";
+// sizes attribute tells browser: use 200px image for screens up to 767px, then 800px up to 1200px, otherwise 1920px
+const heroSrcset = `${heroMobile.src} 200w, ${heroTablet.src} 800w, ${heroDesktop.src} 1920w`;
+const heroSizes = "(max-width: 767px) 200px, (max-width: 1200px) 800px, 1920px";
 
 // Optimize other images
 const symptomeImg = await getImage({ src: symptomeImgAsset, width: 600, format: 'webp' });
@@ -41,26 +42,37 @@ const traumataOptimized = { src: traumataImg.src, srcSet: traumataImg.srcSet.att
 ---
 
 <Layout description="Kunsttherapie und Maltherapie in Eutin. Begleitung bei Trauer, Abschied und persönlichen Themen. Entdecken Sie die heilende Kraft des Malens.">
-	<!-- Responsive preload for LCP hero image - uses imagesrcset for correct size selection -->
+	<!-- Direct mobile preload - critical for 3G performance, browser finds this immediately -->
 	<link 
 		rel="preload" 
+		href={heroMobile.src}
 		as="image"
-		imagesrcset={heroSrcset}
-		imagesizes={heroSizes}
+		type="image/webp"
 		fetchpriority="high"
+		media="(max-width: 767px)"
+		slot="head" 
+	/>
+	<!-- Desktop/tablet preload -->
+	<link 
+		rel="preload" 
+		href={heroDesktop.src}
+		as="image"
+		type="image/webp"
+		fetchpriority="high"
+		media="(min-width: 768px)"
 		slot="head" 
 	/>
 	
-	<!-- LCP Hero Background Image Wrapper - Contains the image within hero section bounds -->
+	<!-- LCP Hero Background Image - Server rendered, immediately discoverable by preload scanner -->
 	<div class="hero-bg-wrapper">
 		<img
-			src={heroDesktop.src}
+			src={heroMobile.src}
 			srcset={heroSrcset}
 			sizes={heroSizes}
 			alt=""
 			loading="eager"
 			fetchpriority="high"
-			decoding="async"
+			decoding="sync"
 			class="hero-bg-image"
 		/>
 	</div>
@@ -84,8 +96,8 @@ const traumataOptimized = { src: traumataImg.src, srcSet: traumataImg.srcSet.att
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: calc(100dvh - 5rem); /* Same as hero section min-height */
-		min-height: 500px;
+		height: 100dvh; /* Full viewport height */
+		min-height: 600px;
 		overflow: hidden;
 		z-index: -10;
 		pointer-events: none;
