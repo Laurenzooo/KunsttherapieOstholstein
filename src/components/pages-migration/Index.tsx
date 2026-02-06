@@ -1,7 +1,10 @@
 import { ArrowRight, Heart, Users, Compass, Brain, Zap, Sparkles, HeartCrack, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-import { GDPRMap } from "@/components/ui/GDPRMap";
+import { lazy, Suspense } from "react";
+
+// Lazy load heavy components
+const GDPRMap = lazy(() => import("@/components/ui/GDPRMap").then(m => ({ default: m.GDPRMap })));
 
 const helpTopics = [
     {
@@ -371,7 +374,9 @@ export default function Index({
                         <div className="grid md:grid-cols-2 gap-12 items-stretch">
                             {/* Map Column */}
                             <div className="w-full order-2 md:order-1 h-full">
-                                <GDPRMap height="100%" />
+                                <Suspense fallback={<div className="w-full h-full bg-muted animate-pulse rounded-xl" style={{ minHeight: "300px" }} />}>
+                                    <GDPRMap height="100%" />
+                                </Suspense>
                             </div>
 
                             {/* Text Column */}
