@@ -4,5 +4,5 @@ import AngebotPreisePage from '../components/pages-migration/AngebotPreise.tsx';
 ---
 
 <Layout title="Angebot & Preise | Mikela Blanck Kunsttherapie" description="Informationen zu meinen kunsttherapeutischen Angeboten, Workshops und Preisen in Eutin.">
-	<AngebotPreisePage client:load currentPath={Astro.url.pathname} />
+	<AngebotPreisePage client:idle currentPath={Astro.url.pathname} />
 </Layout>

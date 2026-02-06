@@ -4,5 +4,5 @@ import DatenschutzPage from '../components/pages-migration/Datenschutz.tsx';
 ---
 
 <Layout title="Datenschutzerklärung | Mikela Blanck Kunsttherapie" robots="noindex, follow">
-	<DatenschutzPage client:load currentPath={Astro.url.pathname} />
+	<DatenschutzPage client:idle currentPath={Astro.url.pathname} />
 </Layout>
