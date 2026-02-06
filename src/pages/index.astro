@@ -12,20 +12,25 @@ import trauerImgAsset from "../assets/trauer-abschied.webp";
 import entscheidungenImgAsset from "../assets/entscheidungen.webp";
 import traumataImgAsset from "../assets/traumata.webp";
 
-// Optimize images
-const heroImage = await getImage({ src: heroImgAsset, width: 1920, format: 'webp' });
+// Generate responsive hero images for LCP optimization
+// Mobile: tiny (300px) since it's displayed blurred anyway
+// Tablet: medium (800px)
+// Desktop: full resolution (1920px)
+const heroMobile = await getImage({ src: heroImgAsset, width: 300, quality: 60, format: 'webp' });
+const heroTablet = await getImage({ src: heroImgAsset, width: 800, quality: 75, format: 'webp' });
+const heroDesktop = await getImage({ src: heroImgAsset, width: 1920, quality: 80, format: 'webp' });
+
+// Build srcset and sizes for responsive loading
+const heroSrcset = `${heroMobile.src} 300w, ${heroTablet.src} 800w, ${heroDesktop.src} 1920w`;
+const heroSizes = "100vw";
+
+// Optimize other images
 const symptomeImg = await getImage({ src: symptomeImgAsset, width: 600, format: 'webp' });
 const wuenscheImg = await getImage({ src: wuenscheImgAsset, width: 600, format: 'webp' });
 const beziehungenImg = await getImage({ src: beziehungenImgAsset, width: 600, format: 'webp' });
 const trauerImg = await getImage({ src: trauerImgAsset, width: 600, format: 'webp' });
 const entscheidungenImg = await getImage({ src: entscheidungenImgAsset, width: 600, format: 'webp' });
 const traumataImg = await getImage({ src: traumataImgAsset, width: 600, format: 'webp' });
-
-// Get optimized image metadata for IndexPage
-const heroOptimized = {
-    src: heroImage.src,
-    srcSet: heroImage.srcSet.attribute
-};
 
 const symptomeOptimized = { src: symptomeImg.src, srcSet: symptomeImg.srcSet.attribute };
 const wuenscheOptimized = { src: wuenscheImg.src, srcSet: wuenscheImg.srcSet.attribute };
@@ -36,12 +41,33 @@ const traumataOptimized = { src: traumataImg.src, srcSet: traumataImg.srcSet.att
 ---
 
 <Layout description="Kunsttherapie und Maltherapie in Eutin. Begleitung bei Trauer, Abschied und persönlichen Themen. Entdecken Sie die heilende Kraft des Malens.">
-	<!-- Preload LCP hero image for better performance -->
-	<link rel="preload" href={heroImage.src} as="image" type="image/webp" fetchpriority="high" slot="head" />
+	<!-- Responsive preload for LCP hero image - uses imagesrcset for correct size selection -->
+	<link 
+		rel="preload" 
+		as="image"
+		imagesrcset={heroSrcset}
+		imagesizes={heroSizes}
+		fetchpriority="high"
+		slot="head" 
+	/>
+	
+	<!-- LCP Hero Background Image Wrapper - Contains the image within hero section bounds -->
+	<div class="hero-bg-wrapper">
+		<img
+			src={heroDesktop.src}
+			srcset={heroSrcset}
+			sizes={heroSizes}
+			alt=""
+			loading="eager"
+			fetchpriority="high"
+			decoding="async"
+			class="hero-bg-image"
+		/>
+	</div>
+	
 	<IndexPage 
 		client:idle 
 		currentPath={Astro.url.pathname} 
-		heroImage={heroOptimized}
 		symptomeImg={symptomeOptimized}
 		wuenscheImg={wuenscheOptimized}
 		beziehungenImg={beziehungenOptimized}
@@ -50,4 +76,43 @@ const traumataOptimized = { src: traumataImg.src, srcSet: traumataImg.srcSet.att
 		traumataImg={traumataOptimized}
 	/>
 </Layout>
+
+<style>
+	/* Hero wrapper - matches the hero section dimensions */
+	.hero-bg-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: calc(100dvh - 5rem); /* Same as hero section min-height */
+		min-height: 500px;
+		overflow: hidden;
+		z-index: -10;
+		pointer-events: none;
+	}
+	
+	/* LCP Hero image - fills the wrapper */
+	.hero-bg-image {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: right center;
+	}
+	
+	@media (min-width: 768px) {
+		.hero-bg-image {
+			object-position: center;
+		}
+	}
+	
+	/* Apply blur on mobile via CSS filter - matches the original design */
+	@media (max-width: 767px) {
+		.hero-bg-image {
+			filter: blur(8px);
+			transform: scale(1.02); /* Prevent blur edges from showing */
+		}
+	}
+</style>
 

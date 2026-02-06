@@ -89,7 +89,6 @@ const testimonials = [
 
 export default function Index({
     currentPath,
-    heroImage,
     symptomeImg,
     wuenscheImg,
     beziehungenImg,
@@ -98,7 +97,6 @@ export default function Index({
     traumataImg
 }: {
     currentPath?: string;
-    heroImage?: any;
     symptomeImg?: any;
     wuenscheImg?: any;
     beziehungenImg?: any;
@@ -138,45 +136,8 @@ export default function Index({
 
     return (
         <Layout currentPath={currentPath}>
-            {/* Hero Section */}
+            {/* Hero Section - Background image is now rendered by Astro for LCP optimization */}
             <section className="relative min-h-[calc(100dvh-5rem)] flex items-center py-24 md:py-32 lg:py-40 overflow-hidden">
-                {/* Sharp background image layer */}
-                <div
-                    className="absolute inset-0 hero-bg-sharp"
-                    style={{
-                        backgroundImage: heroImage ? `url('${heroImage.src}')` : "url('/assets/hero_background.webp')",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                    }}
-                />
-                {heroImage?.srcSet && (
-                    <style>{`
-                        @media (min-width: 768px) {
-                            .hero-bg-sharp {
-                                background-image: image-set(
-                                    ${heroImage.srcSet.split(', ').map((s: string) => `url('${s.split(' ')[0]}') ${s.split(' ')[1]}`).join(', ')}
-                                );
-                            }
-                        }
-                    `}</style>
-                )}
-                <style>{`
-                    .hero-bg-sharp { background-position: right center; }
-                    @media (min-width: 768px) {
-                        .hero-bg-sharp { background-position: center; }
-                    }
-                `}</style>
-                {/* Mobile: Full blur overlay */}
-                <div
-                    className="absolute inset-0 md:hidden"
-                    style={{
-                        backgroundImage: heroImage ? `url('${heroImage.src}')` : "url('/assets/hero_background.webp')",
-                        backgroundSize: "cover",
-                        backgroundPosition: "right center",
-                        backgroundRepeat: "no-repeat",
-                        filter: "blur(8px)",
-                    }}
-                />
                 {/* Mobile: Full white overlay for text readability */}
                 <div
                     className="absolute inset-0 md:hidden"
