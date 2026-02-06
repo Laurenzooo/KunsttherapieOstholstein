@@ -156,7 +156,7 @@ export default function Index({
 
                 <div className="container relative z-10">
                     <div className="max-w-2xl space-y-6 text-left">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] animate-fade-in">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1]">
                             Wenn Worte nicht mehr weiterhelfen …
                         </h1>
                         <p

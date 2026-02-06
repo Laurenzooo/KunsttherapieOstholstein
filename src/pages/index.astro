@@ -42,24 +42,13 @@ const traumataOptimized = { src: traumataImg.src, srcSet: traumataImg.srcSet.att
 ---
 
 <Layout description="Kunsttherapie und Maltherapie in Eutin. Begleitung bei Trauer, Abschied und persönlichen Themen. Entdecken Sie die heilende Kraft des Malens.">
-	<!-- Direct mobile preload - critical for 3G performance, browser finds this immediately -->
+	<!-- Single responsive preload matching the img srcset exactly - avoids "preloaded but not used" warning -->
 	<link 
 		rel="preload" 
-		href={heroMobile.src}
 		as="image"
-		type="image/webp"
+		imagesrcset={heroSrcset}
+		imagesizes={heroSizes}
 		fetchpriority="high"
-		media="(max-width: 767px)"
-		slot="head" 
-	/>
-	<!-- Desktop/tablet preload -->
-	<link 
-		rel="preload" 
-		href={heroDesktop.src}
-		as="image"
-		type="image/webp"
-		fetchpriority="high"
-		media="(min-width: 768px)"
 		slot="head" 
 	/>
 	
