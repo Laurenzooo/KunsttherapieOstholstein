@@ -1,7 +1,7 @@
 import { ArrowRight, Heart, Users, Compass, Brain, Zap, Sparkles, HeartCrack, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 // Lazy load heavy components
 const GDPRMap = lazy(() => import("@/components/ui/GDPRMap").then(m => ({ default: m.GDPRMap })));
@@ -114,6 +114,27 @@ export default function Index({
         "Entscheidungen": entscheidungenImg,
         "Traumata": traumataImg
     };
+
+    const [mapVisible, setMapVisible] = useState(false);
+    const mapRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setMapVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: '300px' } // Load map slightly before it comes into view
+        );
+
+        if (mapRef.current) {
+            observer.observe(mapRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <Layout currentPath={currentPath}>
@@ -373,10 +394,12 @@ export default function Index({
                         </div>
                         <div className="grid md:grid-cols-2 gap-12 items-stretch">
                             {/* Map Column */}
-                            <div className="w-full order-2 md:order-1 h-full">
-                                <Suspense fallback={<div className="w-full h-full bg-muted animate-pulse rounded-xl" style={{ minHeight: "300px" }} />}>
-                                    <GDPRMap height="100%" />
-                                </Suspense>
+                            <div ref={mapRef} className="w-full order-2 md:order-1 h-full min-h-[300px]">
+                                {mapVisible && (
+                                    <Suspense fallback={<div className="w-full h-full bg-muted animate-pulse rounded-xl" style={{ minHeight: "300px" }} />}>
+                                        <GDPRMap height="100%" />
+                                    </Suspense>
+                                )}
                             </div>
 
                             {/* Text Column */}
