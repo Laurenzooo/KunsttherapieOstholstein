@@ -252,7 +252,7 @@ export default function AngebotPreise({ currentPath }: { currentPath?: string })
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h1 className="text-4xl md:text-6xl font-light text-foreground">Meine Angebote</h1>
             <p className="text-lg text-muted-foreground">
-              Transparente Konditionen für deine persönliche Begleitung.
+              Transparente Konditionen für deine persönliche Begleitung. Erfahre mehr darüber, <a href="/methode-ablauf" className="text-primary hover:underline">wie ich arbeite</a>.
             </p>
           </div>
         </div>

@@ -50,6 +50,9 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
             <p className="text-lg text-muted-foreground">
               Ich freue mich auf deine Nachricht. Schreib mir, worum es geht – ich melde mich zeitnah zurück.
             </p>
+            <p className="text-sm text-muted-foreground">
+              Noch unsicher? Informiere dich zuerst über <a href="/methode-ablauf" className="text-primary hover:underline">meine Methoden</a> oder <a href="/angebot-preise" className="text-primary hover:underline">Angebote &amp; Preise</a>.
+            </p>
           </div>
         </div>
       </section>

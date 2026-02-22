@@ -102,7 +102,7 @@ export default function UeberMich({
                 <p>
                   In meiner Arbeit lade ich dich ein, anzukommen, zuzulassen und
                   neu zu vertrauen. Malen und Gestalten öffnen einen Zugang zu
-                  dem, was sich oft nicht in Worte fassen lässt.
+                  dem, was sich oft nicht in Worte fassen lässt. Erfahre mehr darüber, <a href="/methode-ablauf" className="text-primary hover:underline">wie ich arbeite</a>.
                 </p>
               </div>
             </div>
@@ -239,7 +239,7 @@ export default function UeberMich({
             </h2>
             <p className="text-lg text-muted-foreground">
               Wenn du prüfen willst, ob ich die Richtige für dein Anliegen bin:
-              Schreib mir einfach.
+              Schreib mir einfach. Oder informiere dich zuerst über meine <a href="/angebot-preise" className="text-primary hover:underline">Angebote & Preise</a> und lies in meinem <a href="/blog" className="text-primary hover:underline">Blog</a>, was mich bewegt.
             </p>
             <Button asChild size="lg">
               <a href="/kontakt">

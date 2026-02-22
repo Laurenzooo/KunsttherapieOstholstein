@@ -162,7 +162,7 @@ const faqs = [
   {
     question: "Wie lange dauert eine Einheit?",
     answer:
-      "Ein Einzeltermin dauert ca. 75 Minuten, manchmal auch etwas länger, je nach Prozess und Absprache. Gruppenformate gehen in der Regel 120 Minuten, damit genug Zeit für alle ist.",
+      "Ein Einzeltermin dauert ca. 75 Minuten, manchmal auch etwas länger, je nach Prozess und Absprache. Gruppenformate gehen in der Regel 120 Minuten, damit genug Zeit für alle ist. Alle Informationen zu Konditionen findest du auf der Seite Angebot & Preise.",
   },
   {
     question: "Wie viele Termine brauche ich?",
@@ -423,6 +423,9 @@ export default function MethodeAblauf({
                     Die BildASet Methode arbeitet mit bereitgestellten Bildkarten. Mit diesen kann auf unterschiedliche Art
                     und Weise kreativ gearbeitet werden. Auch hierfür brauchst Du keine Vorkenntnisse.
                   </p>
+                  <p className="text-sm">
+                    <a href="/ueber-mich" className="text-primary hover:underline">Mehr über mich und meinen Weg →</a>
+                  </p>
                 </div>
               </div>
               <div className="aspect-[4/5] rounded-lg overflow-hidden">
@@ -580,7 +583,11 @@ export default function MethodeAblauf({
                   <AccordionTrigger className="text-left font-medium text-foreground hover:text-primary">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.question === "Wie lange dauert eine Einheit?" ? (
+                      <>Ein Einzeltermin dauert ca. 75 Minuten, manchmal auch etwas länger, je nach Prozess und Absprache. Gruppenformate gehen in der Regel 120 Minuten, damit genug Zeit für alle ist. Alle Informationen zu Konditionen findest du auf der Seite <a href="/angebot-preise" className="text-primary hover:underline">Angebot &amp; Preise</a>.</>
+                    ) : faq.answer}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -597,12 +604,20 @@ export default function MethodeAblauf({
               Schreib mir 3 Sätze zu deiner Situation – ich antworte dir persönlich und wir finden heraus, ob und wie
               ich dich unterstützen kann.
             </p>
-            <Button asChild size="lg">
-              <a href="/kontakt">
-                Kontakt aufnehmen
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg">
+                <a href="/kontakt">
+                  Kontakt aufnehmen
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <a href="/angebot-preise">
+                  Angebote & Preise ansehen
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

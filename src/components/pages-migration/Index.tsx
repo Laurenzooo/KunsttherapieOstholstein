@@ -68,7 +68,8 @@ const methods = [
     },
     {
         title: "Außerdem...",
-        description: "Ich biete immer verschiedene Workshops und andere kreative Aktivitäten an. Auf meinem Blog erfährst du alles über die aktuellen Angebote. ",
+        description: "Ich biete immer verschiedene Workshops und andere kreative Aktivitäten an.",
+        blogLink: true,
     },
 ];
 
@@ -298,14 +299,25 @@ export default function Index({
                                 className="p-8 rounded-lg bg-background border border-border hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                             >
                                 <h3 className="text-xl font-light text-foreground mb-3">{method.title}</h3>
-                                <p className="text-muted-foreground">{method.description}</p>
+                                <p className="text-muted-foreground">
+                                    {method.description}{' '}
+                                    {'blogLink' in method && (
+                                        <>Auf meinem <a href="/blog" className="text-primary hover:underline">Blog</a> erfährst du alles über die aktuellen Angebote.</>
+                                    )}
+                                </p>
                             </div>
                         ))}
                     </div>
-                    <div className="text-center mt-10">
+                    <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                         <Button asChild variant="outline" size="lg">
                             <a href="/methode-ablauf">
                                 Mehr erfahren
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </a>
+                        </Button>
+                        <Button asChild variant="outline" size="lg">
+                            <a href="/angebot-preise">
+                                Preise ansehen
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
                         </Button>
@@ -341,6 +353,11 @@ export default function Index({
                     <p className="text-center mt-10 text-xs text-muted-foreground italic">
                         Hinweis: Die Namen der Klienten wurden zum Schutz der Privatsphäre anonymisiert.
                     </p>
+                    <div className="text-center mt-6">
+                        <a href="/ueber-mich" className="text-primary hover:underline text-sm">
+                            Mehr über mich und meinen Weg erfahren →
+                        </a>
+                    </div>
                 </div>
             </section>
 
