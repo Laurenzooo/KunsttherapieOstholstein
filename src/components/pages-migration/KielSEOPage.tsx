@@ -102,7 +102,7 @@ export default function KielSEOPage({
                                 </a>
                             </Button>
                             <Button asChild variant="outline" size="lg" className="text-base px-8 h-12 rounded-md transition-colors">
-                                <a href="/kunsttherapie">
+                                <a href="/methode-ablauf">
                                     So arbeite ich
                                 </a>
                             </Button>
@@ -208,7 +208,7 @@ export default function KielSEOPage({
                             </p>
                             <div>
                                 <Button asChild variant="outline" size="lg">
-                                    <a href="/kunsttherapie">
+                                    <a href="/methode-ablauf">
                                         So arbeite ich
                                         <ArrowRight className="ml-2 h-4 w-4" />
                                     </a>

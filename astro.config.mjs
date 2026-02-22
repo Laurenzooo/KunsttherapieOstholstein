@@ -12,6 +12,10 @@ export default defineConfig({
     site: 'https://kunsttherapie-ostholstein.de',
     integrations: [react(), tailwind(), sitemap()],
     output: 'static',
+    redirects: {
+        '/so-arbeite-ich': '/methode-ablauf',
+        '/kunsttherapie': '/methode-ablauf',
+    },
     // Inline all stylesheets to eliminate render-blocking resources in PageSpeed Insights
     build: {
         inlineStylesheets: 'always',

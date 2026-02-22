@@ -56,7 +56,7 @@ const NotFound = () => {
               <div className="flex flex-wrap gap-3 justify-center">
                 {[
                   { label: "Über mich", href: "/ueber-mich" },
-                  { label: "So arbeite ich", href: "/so-arbeite-ich" },
+                  { label: "So arbeite ich", href: "/methode-ablauf" },
                   { label: "Angebot & Preise", href: "/angebot-preise" },
                   { label: "Blog", href: "/blog" },
                 ].map((link) => (

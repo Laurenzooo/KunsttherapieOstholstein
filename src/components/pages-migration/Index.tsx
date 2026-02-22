@@ -183,7 +183,7 @@ export default function Index({
                                 </a>
                             </Button>
                             <Button asChild variant="outline" size="lg" className="text-base border-input hover:bg-accent hover:text-accent-foreground px-8 h-12 rounded-md">
-                                <a href="/so-arbeite-ich">So arbeite ich</a>
+                                <a href="/methode-ablauf">So arbeite ich</a>
                             </Button>
                         </div>
                     </div>
@@ -304,7 +304,7 @@ export default function Index({
                     </div>
                     <div className="text-center mt-10">
                         <Button asChild variant="outline" size="lg">
-                            <a href="/so-arbeite-ich">
+                            <a href="/methode-ablauf">
                                 Mehr erfahren
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
