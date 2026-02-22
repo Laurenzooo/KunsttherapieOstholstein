@@ -15,7 +15,7 @@ const lomBlogPost = await client.fetch(`*[_type == "post" && slug.current == "lo
 ---
 
 <Layout 
-	title="Methoden-Finder | Kunsttherapie Ostholstein"
+	title="Methoden-Finder | Mikela Blanck Kunsttherapie"
 	description="Finde heraus, welche kunsttherapeutische Methode am besten zu dir passt. Personenorientiertes Malen, Lösungsorientiertes Malen oder BildASet."
 >
 	<MethodFinder client:load currentPath={Astro.url.pathname} lomBlogPost={lomBlogPost} />

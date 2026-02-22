@@ -234,26 +234,7 @@ const metaDescription = post.seoDescription || (post.subheading ? portableTextTo
 						)}
 					</div>
 
-					<!-- Contextual Internal Links -->
-					<div class="mt-16">
-						<div class="p-6 rounded-xl bg-card border border-border">
-							<h4 class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Weiterführende Seiten</h4>
-							<div class="grid sm:grid-cols-3 gap-4">
-								<a href="/methode-ablauf" class="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors group">
-									<span class="text-primary text-lg">→</span>
-									<span class="text-sm text-foreground group-hover:text-primary transition-colors">So arbeite ich</span>
-								</a>
-								<a href="/angebot-preise" class="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors group">
-									<span class="text-primary text-lg">→</span>
-									<span class="text-sm text-foreground group-hover:text-primary transition-colors">Angebot & Preise</span>
-								</a>
-								<a href="/ueber-mich" class="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors group">
-									<span class="text-primary text-lg">→</span>
-									<span class="text-sm text-foreground group-hover:text-primary transition-colors">Über mich</span>
-								</a>
-							</div>
-						</div>
-					</div>
+
 
 					{/* Sidebar Contact CTA (Right Column, Row 2) */}
 					<aside class="sticky top-32 hidden xl:block xl:col-start-3 xl:row-start-2">
@@ -272,6 +253,21 @@ const metaDescription = post.seoDescription || (post.subheading ? portableTextTo
 								>
 									Jetzt Kontakt aufnehmen
 								</a>
+
+								<div class="mt-6 pt-6 border-t border-[#B19D90]/15 space-y-2">
+									<a href="/methode-ablauf" class="flex items-center gap-2.5 py-1.5 text-sm text-muted-foreground hover:text-primary transition-colors group">
+										<span class="text-[#B19D90] group-hover:text-primary transition-colors text-xs">→</span>
+										So arbeite ich
+									</a>
+									<a href="/angebot-preise" class="flex items-center gap-2.5 py-1.5 text-sm text-muted-foreground hover:text-primary transition-colors group">
+										<span class="text-[#B19D90] group-hover:text-primary transition-colors text-xs">→</span>
+										Angebot & Preise
+									</a>
+									<a href="/ueber-mich" class="flex items-center gap-2.5 py-1.5 text-sm text-muted-foreground hover:text-primary transition-colors group">
+										<span class="text-[#B19D90] group-hover:text-primary transition-colors text-xs">→</span>
+										Über mich
+									</a>
+								</div>
 							</div>
 						</div>
 					</aside>
