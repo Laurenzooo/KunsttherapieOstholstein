@@ -178,13 +178,13 @@ export default function Index({
                             style={{ animationDelay: "0.3s" }}
                         >
                             <Button asChild size="lg" className="text-base bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12 rounded-md transition-colors">
-                                <a href="/kontakt">
+                                <a href="/kontakt" data-umami-event="cta-hero-termin">
                                     Termin anfragen
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </a>
                             </Button>
                             <Button asChild variant="outline" size="lg" className="text-base border-input hover:bg-accent hover:text-accent-foreground px-8 h-12 rounded-md">
-                                <a href="/methode-ablauf">So arbeite ich</a>
+                                <a href="/methode-ablauf" data-umami-event="cta-hero-methode">So arbeite ich</a>
                             </Button>
                         </div>
                     </div>
@@ -274,7 +274,7 @@ export default function Index({
                     </div>
                     <div className="text-center mt-10">
                         <Button asChild size="lg">
-                            <a href="/kontakt">
+                            <a href="/kontakt" data-umami-event="cta-3steps-termin">
                                 Termin anfragen
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
@@ -310,13 +310,13 @@ export default function Index({
                     </div>
                     <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                         <Button asChild variant="outline" size="lg">
-                            <a href="/methode-ablauf">
+                            <a href="/methode-ablauf" data-umami-event="cta-methods-mehr">
                                 Mehr erfahren
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
                         </Button>
                         <Button asChild variant="outline" size="lg">
-                            <a href="/angebot-preise">
+                            <a href="/angebot-preise" data-umami-event="cta-methods-preise">
                                 Preise ansehen
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
@@ -415,7 +415,7 @@ export default function Index({
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button asChild size="lg">
-                                <a href="/kontakt">
+                                <a href="/kontakt" data-umami-event="cta-bottom-kontakt">
                                     Kontakt aufnehmen
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </a>

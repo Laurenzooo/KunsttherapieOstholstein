@@ -30,11 +30,20 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
       if (response.ok) {
         setSubmitted(true);
         toast.success(result.message || "Vielen Dank! Deine Nachricht wurde gesendet.");
+        if (typeof window !== 'undefined' && (window as any).umami) {
+          (window as any).umami.track('contact-form-submit', { success: true });
+        }
       } else {
         toast.error(result.error || "Etwas ist schiefgelaufen. Bitte versuche es später erneut.");
+        if (typeof window !== 'undefined' && (window as any).umami) {
+          (window as any).umami.track('contact-form-error', { error: 'server' });
+        }
       }
     } catch (error) {
       toast.error("Verbindung zum Server fehlgeschlagen. Bitte versuche es später erneut.");
+      if (typeof window !== 'undefined' && (window as any).umami) {
+        (window as any).umami.track('contact-form-error', { error: 'network' });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -70,6 +79,7 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     <a
                       href={`mailto:${businessInfo.contact.email}`}
                       className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-md transition-all duration-300"
+                      data-umami-event="click-email-kontakt"
                     >
                       <Mail className="h-5 w-5 text-primary mt-0.5" />
                       <div>
@@ -82,6 +92,7 @@ export default function Kontakt({ currentPath }: { currentPath?: string }) {
                     <a
                       href={`tel:${businessInfo.contact.phoneValue}`}
                       className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-md transition-all duration-300"
+                      data-umami-event="click-phone-kontakt"
                     >
                       <Phone className="h-5 w-5 text-primary mt-0.5" />
                       <div>

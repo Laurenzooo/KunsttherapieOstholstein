@@ -108,6 +108,11 @@ export default function MethodFinder({ currentPath, lomBlogPost }: MethodFinderP
         });
         setScores(newScores);
 
+        // Track quiz start on first answer
+        if (currentQuestionIndex === 0 && typeof window !== 'undefined' && (window as any).umami) {
+            (window as any).umami.track('quiz-start');
+        }
+
         // Update progress immediately
         setAnsweredCount((prev) => prev + 1);
 
@@ -130,6 +135,10 @@ export default function MethodFinder({ currentPath, lomBlogPost }: MethodFinderP
                 triggerConfetti();
                 setShowResult(true);
                 setIsTransitioning(false);
+                // Track quiz completion with result
+                if (typeof window !== 'undefined' && (window as any).umami) {
+                    (window as any).umami.track('quiz-complete', { result: winningMethod });
+                }
             }
         }, 400);
     };
@@ -256,7 +265,7 @@ export default function MethodFinder({ currentPath, lomBlogPost }: MethodFinderP
 
                                             <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2 mt-auto">
                                                 <Button asChild className="text-sm h-11 flex-1 justify-center">
-                                                    <a href="/kontakt">
+                                                    <a href="/kontakt" data-umami-event="cta-quiz-kontakt">
                                                         {result.ctaText}
                                                         <ArrowRight className="ml-2 h-4 w-4" />
                                                     </a>
@@ -266,6 +275,7 @@ export default function MethodFinder({ currentPath, lomBlogPost }: MethodFinderP
                                                     size="sm"
                                                     onClick={resetQuiz}
                                                     className="text-[10px] h-11 flex-1 lg:flex-none xl:flex-1 justify-center text-muted-foreground hover:text-foreground"
+                                                    data-umami-event="quiz-restart"
                                                 >
                                                     <RotateCcw className="mr-2 h-3 w-3" />
                                                     Quiz wiederholen

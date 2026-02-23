@@ -27,6 +27,7 @@ export function Footer() {
                 <a
                   href={`mailto:${businessInfo.contact.email}`}
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  data-umami-event="click-email-footer"
                 >
                   <Mail className="h-4 w-4 flex-shrink-0" />
                   {businessInfo.contact.email}
@@ -36,6 +37,7 @@ export function Footer() {
                 <a
                   href={`tel:${businessInfo.contact.phoneValue}`}
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  data-umami-event="click-phone-footer"
                 >
                   <Phone className="h-4 w-4 flex-shrink-0" />
                   {businessInfo.contact.phone}

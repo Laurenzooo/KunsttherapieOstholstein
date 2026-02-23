@@ -48,7 +48,7 @@ export function Header({ currentPath }: HeaderProps) {
         {/* CTA Button */}
         <div className="flex items-center gap-4">
           <Button asChild className="hidden sm:inline-flex bg-primary hover:bg-primary/90 text-white rounded-md px-6">
-            <a href="/kontakt">
+            <a href="/kontakt" data-umami-event="cta-header-termin">
               <Phone className="mr-2 h-4 w-4" />
               Termin anfragen
             </a>
@@ -87,7 +87,7 @@ export function Header({ currentPath }: HeaderProps) {
               </a>
             ))}
             <Button asChild className="mt-4 w-full sm:hidden">
-              <a href="/kontakt" onClick={() => setMobileMenuOpen(false)}>
+              <a href="/kontakt" onClick={() => setMobileMenuOpen(false)} data-umami-event="cta-header-termin">
                 Termin anfragen
               </a>
             </Button>
